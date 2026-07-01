@@ -72,6 +72,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .team .flag{font-size:20px}
 .team .tn{font-weight:700;font-size:15px}
 .team .tn.win{color:var(--gold)}
+.team .tn.label{color:var(--muted);font-weight:500;font-style:italic;font-size:13px}
 .scorebox{display:flex;gap:10px;align-items:center}
 .score-final{min-width:34px;text-align:center;font-family:'JetBrains Mono';font-weight:700;font-size:24px;color:var(--gold)}
 .score-pending{font-family:'JetBrains Mono';font-size:13px;color:var(--muted)}
@@ -281,6 +282,26 @@ function bracketTeams(j){
   if(!b)return[null,null];
   return[resolveSlot(b.home),resolveSlot(b.away)];
 }
+// human label for an undecided slot, e.g. "Venc. Jogo 74" / "Perd. Jogo 101"
+function slotLabel(slot){
+  if(!slot)return null;
+  if(slot.team)return slot.team;
+  if(slot.win!=null)return "Venc. Jogo "+slot.win;
+  if(slot.lose!=null)return "Perd. Jogo "+slot.lose;
+  return null;
+}
+// display teams for the Results tab: real team when decided, else the label.
+// Never falls back to random participant picks for knockout games.
+function displayTeams(g){
+  const j=Number(g.jogo);
+  if(j>=73&&j<=88)return teamsFor(g);            // R32: real matchups
+  const b=BR[String(j)];if(!b)return[null,null];
+  const t1=resolveSlot(b.home)||slotLabel(b.home);
+  const t2=resolveSlot(b.away)||slotLabel(b.away);
+  return[t1,t2];
+}
+// true only when a slot resolved to a real qualified team (not a label)
+function isRealTeam(name){return !!name && !/^(Venc|Perd)\. Jogo/.test(name);}
 
 const content=document.getElementById("content");
 let view="ranking",activeRound=rounds[0];
@@ -304,7 +325,8 @@ function jogos(){
   const nav=`<div class="round-nav">`+rounds.map(r=>{const gs=games.filter(g=>g.fase===r);return `<button class="round-btn ${r===activeRound?'active':''}" data-round="${r}">${r}<span class="n">${gs.length}</span></button>`;}).join("")+`</div>`;
   const gs=games.filter(g=>g.fase===activeRound);
   const matches=gs.map(g=>{
-    const o=off[g.jogo]||{};const[s1,s2]=teamsFor(g);const done=hasResult(g.jogo);const known=s1&&s2;
+    const o=off[g.jogo]||{};const[s1,s2]=displayTeams(g);const done=hasResult(g.jogo);
+    const real1=isRealTeam(s1),real2=isRealTeam(s2);const known=real1&&real2;
     const w1=done&&o.gol1>o.gol2, w2=done&&o.gol2>o.gol1, penW1=done&&o.pen==='sel1', penW2=done&&o.pen==='sel2';
     let pickRows="";
     if(known){
@@ -316,15 +338,20 @@ function jogos(){
     }
     const scoreArea=done?`<div class="scorebox"><span class="score-final">${o.gol1}</span><span class="vs">×</span><span class="score-final">${o.gol2}</span></div>`:`<div class="scorebox"><span class="score-pending">— × —</span></div>`;
     const penNote=(done&&o.pen)?`<div class="pen-note">🏆 ${o.pen==='sel1'?s1:s2} avançou nos pênaltis</div>`:"";
+    const fl1=real1?`<span class="flag">${flag(s1)}</span>`:"";
+    const fl2=real2?`<span class="flag">${flag(s2)}</span>`:"";
+    const picksHtml=known
+      ? `<div class="picks"><h4>Palpites & pontos</h4>${pickRows||'<div class="empty">Ninguém palpitou.</div>'}</div>`
+      : `<div class="save-hint">Confronto definido quando os jogos anteriores terminarem.</div>`;
     return `<div class="match ${done?'done':''}">
       <div class="match-head"><span class="match-meta">Jogo <b>${g.jogo}</b> · ${g.cruzamento} · ${g.data} ${g.hora}</span>
       <span class="status ${done?'done':'wait'}">${done?'Final':'Aguardando'}</span></div>
       <div class="teams">
-        <div class="team home"><span class="flag">${flag(s1)}</span><span class="tn ${(w1||penW1)?'win':''}">${s1||'A definir'}</span></div>
+        <div class="team home">${fl1}<span class="tn ${(w1||penW1)?'win':''} ${real1?'':'label'}">${s1||'A definir'}</span></div>
         ${scoreArea}
-        <div class="team away"><span class="tn ${(w2||penW2)?'win':''}">${s2||'A definir'}</span><span class="flag">${flag(s2)}</span></div>
+        <div class="team away"><span class="tn ${(w2||penW2)?'win':''} ${real2?'':'label'}">${s2||'A definir'}</span>${fl2}</div>
       </div>${penNote}
-      ${known?`<div class="picks"><h4>Palpites & pontos</h4>${pickRows||'<div class="empty">Ninguém palpitou.</div>'}</div>`:`<div class="save-hint">Confronto depende de jogos anteriores.</div>`}
+      ${picksHtml}
     </div>`;
   }).join("");
   content.innerHTML=nav+matches;
@@ -349,7 +376,7 @@ function stats(){
   const exactBlock=`<div class="stat-block"><h3>Reis do placar exato <span class="hint">3 pts cada</span></h3>`+byExact.slice(0,8).map(r=>`<div class="hbar"><span class="lbl">${r.p.replace(/_/g," ")}</span><div class="track"><span style="width:${Math.round(r.exact/maxExact*100)}%"></span></div><span class="val">${r.exact}</span></div>`).join("")+`</div>`;
   const hrBlock=`<div class="stat-block"><h3>Melhor aproveitamento <span class="hint">acertos ÷ palpites</span></h3>`+byHitRate.slice(0,8).map(r=>`<div class="hbar"><span class="lbl">${r.p.replace(/_/g," ")}</span><div class="track"><span style="width:${Math.round(r.rate*100)}%"></span></div><span class="val">${Math.round(r.rate*100)}%</span></div>`).join("")+`</div>`;
   const consRows=games.filter(g=>hasResult(g.jogo)).map(g=>{
-    const[s1,s2]=teamsFor(g);const o=off[g.jogo];const cnt={};let voters=0;
+    const[s1,s2]=displayTeams(g);const o=off[g.jogo];const cnt={};let voters=0;
     for(const p of players){const pk=parts[p]?.[g.jogo];if(pk&&pk.gol1!=null&&pk.gol2!=null){const key=`${pk.gol1}–${pk.gol2}`;cnt[key]=(cnt[key]||0)+1;voters++;}}
     let best="—",bn=0;for(const k in cnt){if(cnt[k]>bn){bn=cnt[k];best=k;}}
     const pct=voters?Math.round(bn/voters*100):0,realKey=`${o.gol1}–${o.gol2}`;
