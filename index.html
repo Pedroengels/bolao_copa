@@ -83,6 +83,8 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .palp-warn{background:rgba(255,197,24,.08);border:1px solid rgba(245,197,24,.3);border-radius:12px;padding:16px 18px;color:var(--muted);font-size:13.5px}
 .palp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)}
 .palp-label{display:block;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.palp-whorow{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.palp-bigname{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:clamp(24px,4vw,36px);letter-spacing:-.01em;color:var(--gold);line-height:1}
 .palp-note{font-size:12.5px;color:var(--muted);max-width:44ch}
 .palp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .palp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 16px}
@@ -106,6 +108,14 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .palp-status{font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
 .palp-status.ok{color:var(--cyan)} .palp-status.err{color:var(--coral)}
 .palp-hint{font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
+.palp-team .pn.win{color:var(--gold)}
+.palp-pen{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
+.palp-pen-lbl{font-family:'JetBrains Mono';font-size:11px;color:var(--cyan)}
+.palp-pen-btn{background:var(--ink);border:1px solid var(--border-2);color:var(--muted);border-radius:7px;padding:5px 11px;cursor:pointer;font-family:'Archivo';font-weight:600;font-size:12px;transition:.15s}
+.palp-pen-btn:hover{border-color:var(--gold);color:var(--chalk)}
+.palp-pen-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(245,197,24,.1)}
+.palp-adv{margin-top:9px;font-family:'JetBrains Mono';font-size:11.5px;color:var(--muted)}
+.palp-adv b{color:var(--gold);font-weight:700}
 @media(max-width:640px){.palp-grid{grid-template-columns:1fr}}
 .lant-badge{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--coral)}
 .lant-name{font-family:'Archivo Expanded';font-weight:800;font-size:clamp(17px,2.4vw,22px);letter-spacing:-.01em}
@@ -210,6 +220,43 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .champ{background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid rgba(245,197,24,.4);border-radius:12px;padding:16px;text-align:center;margin-top:12px}
 .champ .k{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .champ .who{font-family:'Archivo Expanded';font-weight:800;font-size:18px;color:var(--gold);margin-top:6px}
+/* bracket editável de palpites */
+.pbracket{display:flex;gap:20px;min-width:1000px;align-items:stretch}
+.pcol{display:flex;flex-direction:column;justify-content:space-around;flex:1;min-width:190px;gap:12px}
+.pcol h4{margin:0 0 4px;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);text-align:center}
+.pcol.final-col{justify-content:center}
+.ptie{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 11px}
+.ptie.decided{border-color:rgba(245,197,24,.28)}
+.ptie.locked{opacity:.6}
+.pt-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
+.pt-jn{font-family:'JetBrains Mono';font-size:9px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.pt-status{font-family:'JetBrains Mono';font-size:9px}
+.pt-status.ok{color:var(--cyan)} .pt-status.err{color:var(--coral)}
+.pt-lock{font-size:11px}
+.pt-side{display:grid;grid-template-columns:18px 1fr 34px;gap:6px;align-items:center;padding:3px 0}
+.pt-side.win .pt-nm{color:var(--gold);font-weight:700}
+.pt-fl{font-size:15px;text-align:center}
+.pt-nm{font-weight:600;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pt-nm.lbl{font-weight:500;font-style:italic;color:var(--muted);font-size:11.5px}
+.pt-in{width:34px;text-align:center;background:var(--ink);border:1px solid var(--border-2);color:var(--gold);font-family:'JetBrains Mono';font-weight:700;font-size:15px;border-radius:7px;padding:4px 0}
+.pt-in:focus{outline:2px solid var(--cyan);border-color:var(--cyan)}
+.pt-in:disabled{opacity:.5;cursor:not-allowed}
+.pt-pen{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:7px;padding-top:7px;border-top:1px dashed var(--border)}
+.pt-pen-lbl{font-family:'JetBrains Mono';font-size:9.5px;color:var(--cyan);text-transform:uppercase;letter-spacing:.08em}
+.pt-pen-btn{background:var(--ink);border:1px solid var(--border-2);color:var(--muted);border-radius:6px;padding:3px 8px;cursor:pointer;font-family:'Archivo';font-weight:600;font-size:11px;transition:.15s}
+.pt-pen-btn:hover{border-color:var(--gold);color:var(--chalk)}
+.pt-pen-btn.on{border-color:var(--gold);color:var(--gold);background:rgba(245,197,24,.1)}
+.pt-foot{display:flex;align-items:center;gap:8px;margin-top:9px;padding-top:8px;border-top:1px dashed var(--border)}
+.pt-save{background:var(--cyan);border:none;color:var(--ink);font-family:'Archivo';font-weight:700;font-size:12px;padding:5px 14px;border-radius:7px;cursor:pointer;transition:.15s}
+.pt-save:hover{filter:brightness(1.1)}
+.pt-save.disabled,.pt-save:disabled{background:var(--border-2);color:var(--muted);cursor:not-allowed;font-size:10.5px;font-weight:600}
+.pt-lockmsg{font-family:'JetBrains Mono';font-size:10px;color:var(--muted);letter-spacing:.05em}
+.pt-champ{background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid rgba(245,197,24,.4);border-radius:11px;padding:14px;text-align:center;margin-bottom:12px}
+.pt-champ .k{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pt-champ .who{font-family:'Archivo Expanded';font-weight:800;font-size:16px;color:var(--gold);margin-top:5px}
+.palp-savebar{margin-bottom:14px}
+.palp-savemsg{font-family:'JetBrains Mono';font-size:11.5px;color:var(--muted)}
+.palp-savemsg.ok{color:var(--cyan)} .palp-savemsg.err{color:var(--coral)}
 .empty{color:var(--muted);text-align:center;padding:30px;font-style:italic}
 .foot{margin-top:30px;text-align:center;font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
 @media(max-width:640px){.podium{grid-template-columns:1fr}.pick-row{grid-template-columns:1fr auto}table.board .hide-sm{display:none}.hbar{grid-template-columns:110px 1fr 40px}}
@@ -245,7 +292,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 
   <div id="content"></div>
-  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v11</span> · <span style="opacity:.5">palpites on/span></div>
+  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v15</span> · <span style="opacity:.5">palpites on/span></div>
 </div>
 
 <script>
@@ -340,17 +387,19 @@ async function fetchPicksFromSheet(){
     if(pk.gol1==null || pk.gol2==null) continue;
     if(!parts[p][j]) parts[p][j]={sel1:null,sel2:null,gol1:null,gol2:null};
     parts[p][j].gol1=pk.gol1; parts[p][j].gol2=pk.gol2;
+    parts[p][j].pen=(pk.pen==='sel1'||pk.pen==='sel2')?pk.pen:null;
+    parts[p][j].saved=true; // veio do Sheets = já salvo, então já vem travado
   }
 }
 
 // Envia um palpite pro Apps Script (POST). Retorna {ok, error?}
-async function savePick(participante, jogo, gol1, gol2){
+async function savePick(participante, jogo, gol1, gol2, pen){
   if(!PICKS_ENABLED()) return {ok:false, error:'API de palpites não configurada'};
   const r=await fetch(PICKS_API,{
     method:'POST',
     redirect:'follow',
     headers:{'Content-Type':'text/plain;charset=utf-8'}, // text/plain evita preflight CORS
-    body:JSON.stringify({participante, jogo, gol1, gol2})
+    body:JSON.stringify({participante, jogo, gol1, gol2, pen:pen||''})
   });
   return await r.json();
 }
@@ -418,6 +467,51 @@ function displayTeams(g){
 }
 // true only when a slot resolved to a real qualified team (not a label)
 function isRealTeam(name){return !!name && !/^(Venc|Perd)\. Jogo/.test(name);}
+
+// ---- CHAVE PESSOAL: resolve o bracket a partir dos palpites de UM participante ----
+// Quem o participante 'p' acha que vence o jogo j. Para 73-88 (já jogados) usa o resultado oficial.
+function pickWinner(p, j){
+  j=Number(j);
+  // 32-avos já aconteceram: quem avança é o vencedor REAL (via bracket oficial)
+  if(j>=73&&j<=88){
+    return resolveSlot({win:j});
+  }
+  const [h,a]=pickTeams(p,j);
+  if(!h||!a) return null;
+  const pk=parts[p]?.[j];
+  if(!pk || pk.gol1==null || pk.gol2==null) return null;
+  if(pk.gol1>pk.gol2) return h;
+  if(pk.gol2>pk.gol1) return a;
+  if(pk.pen==='sel1') return h;
+  if(pk.pen==='sel2') return a;
+  return null;
+}
+// Os dois times de um jogo na chave PESSOAL de p (89+ = vencedores que p escolheu; feed de 73-88 = real)
+function pickTeams(p, j){
+  j=Number(j);
+  if(j>=73&&j<=88) return r32Teams(j);
+  const b=BR[String(j)];
+  if(!b) return [null,null];
+  const side=slot=>{
+    if(!slot) return null;
+    if(slot.team) return slot.team;
+    if(slot.win!=null) return pickWinner(p, slot.win);
+    if(slot.lose!=null){
+      const g=slot.lose;const[h,a]=pickTeams(p,g);const w=pickWinner(p,g);
+      if(!h||!a||!w) return null; return w===h?a:h;
+    }
+    return null;
+  };
+  return [side(b.home), side(b.away)];
+}
+// Times para exibição na aba de palpites: nome real quando definido, senão rótulo.
+function pickDisplayTeams(p, g){
+  const j=Number(g.jogo);
+  if(j>=73&&j<=88) return r32Teams(j);
+  const b=BR[String(j)];if(!b)return[null,null];
+  const [h,a]=pickTeams(p,j);
+  return [h||slotLabel(b.home), a||slotLabel(b.away)];
+}
 
 const content=document.getElementById("content");
 let view="ranking",activeRound=rounds[0];
@@ -694,70 +788,151 @@ function palpitar(){
     content.innerHTML=`<div class="palp-warn">✏️ A entrada de palpites ainda não está configurada. O organizador precisa publicar o Apps Script e colar a URL no dashboard.</div>`;
     return;
   }
-  const opts=players.map(p=>`<option value="${p}" ${p===palpitarWho?'selected':''}>${p.replace(/_/g," ")}</option>`).join("");
-  // oitavas em diante (89-104): confrontos do mata-mata
-  const gs=games.filter(g=>g.jogo>=89&&g.jogo<=104);
-  const cards=gs.map(g=>{
-    const[s1,s2]=displayTeams(g);
+  const p=palpitarWho;
+  const opts=players.map(x=>`<option value="${x}" ${x===p?'selected':''}>${x.replace(/_/g," ")}</option>`).join("");
+
+  // um confronto editável no formato de chave
+  function palpTie(j){
+    const g=games.find(x=>x.jogo===j);
+    const[s1,s2]=pickDisplayTeams(p,g);
     const real1=isRealTeam(s1),real2=isRealTeam(s2);
     const ko=gameStart(g);const started=ko!=null && Date.now()>=ko;
-    const done=hasResult(g.jogo);
-    const locked=started||done;
-    const pk=parts[palpitarWho]?.[g.jogo]||{};
+    const done=hasResult(j);
+    const pk=parts[p]?.[j]||{};
+    const hasPick = pk.gol1!=null && pk.gol2!=null;      // tem placar preenchido
+    const saved = pk.saved===true;                        // já foi salvo (travado)
+    const lockedByTime = started||done;                   // jogo começou
+    const locked = lockedByTime || saved;                 // trava se SALVO ou se começou
     const v1=pk.gol1!=null?pk.gol1:'';const v2=pk.gol2!=null?pk.gol2:'';
-    const fl1=real1?`<span class="flag">${flag(s1)}</span>`:'';
-    const fl2=real2?`<span class="flag">${flag(s2)}</span>`:'';
-    return `<div class="palp-card ${locked?'locked':''}" data-jogo="${g.jogo}">
-      <div class="palp-meta">Jogo ${g.jogo} · ${g.fase} · ${g.data} ${g.hora} ${locked?'· <span class="palp-lock">🔒 travado</span>':'· <span class="palp-open">aberto</span>'}</div>
-      <div class="palp-row">
-        <div class="palp-team">${fl1}<span class="pn ${real1?'':'lbl'}">${s1||'A definir'}</span></div>
-        <div class="palp-inputs">
-          <input class="palp-in" type="number" min="0" inputmode="numeric" data-side="1" value="${v1}" ${locked?'disabled':''}>
-          <span class="vs">×</span>
-          <input class="palp-in" type="number" min="0" inputmode="numeric" data-side="2" value="${v2}" ${locked?'disabled':''}>
-        </div>
-        <div class="palp-team right"><span class="pn ${real2?'':'lbl'}">${s2||'A definir'}</span>${fl2}</div>
+    const isDraw=pk.gol1!=null&&pk.gol1===pk.gol2;
+    const winner=pickWinner(p,j);
+    const w1=winner&&winner===s1,w2=winner&&winner===s2;
+    // botão de pênaltis: em empate, antes de salvar
+    let penUI="";
+    if(isDraw&&real1&&real2&&!lockedByTime&&!saved){
+      penUI=`<div class="pt-pen"><span class="pt-pen-lbl">empate! quem passa?</span>
+        <button class="pt-pen-btn ${pk.pen==='sel1'?'on':''}" data-pen="${j}" data-val="sel1" title="${s1}">${s1.length>10?s1.slice(0,9)+'…':s1}</button>
+        <button class="pt-pen-btn ${pk.pen==='sel2'?'on':''}" data-pen="${j}" data-val="sel2" title="${s2}">${s2.length>10?s2.slice(0,9)+'…':s2}</button></div>`;
+    }
+    // barra de ação: botão salvar (quando aberto e com placar), ou 🔒 quando travado
+    let actionUI="";
+    if(locked){
+      actionUI=`<div class="pt-foot"><span class="pt-lockmsg">${lockedByTime?'🔒 jogo começou':'🔒 palpite salvo'}</span></div>`;
+    }else if(hasPick){
+      // se empate, só habilita salvar após escolher pênaltis
+      const needPen = isDraw && pk.pen==null;
+      actionUI=`<div class="pt-foot">
+        <button class="pt-save ${needPen?'disabled':''}" data-save="${j}" ${needPen?'disabled':''}>${needPen?'escolha o pênalti':'Salvar'}</button>
+        <span class="pt-status" data-status="${j}"></span></div>`;
+    }
+    const st=locked?`<span class="pt-lock">🔒</span>`:'';
+    return `<div class="ptie ${locked?'locked':''} ${winner?'decided':''}" data-jogo="${j}">
+      <div class="pt-head"><span class="pt-jn">Jogo ${j}</span>${st}</div>
+      <div class="pt-side ${w1?'win':''}">
+        <span class="pt-fl">${real1?flag(s1):'⚪'}</span>
+        <span class="pt-nm ${real1?'':'lbl'}">${s1||'A definir'}</span>
+        <input class="pt-in" type="number" min="0" inputmode="numeric" data-side="1" data-jogo="${j}" value="${v1}" ${locked?'disabled':''}>
       </div>
-      <div class="palp-actions">
-        ${locked?'<span class="palp-hint">Jogo já começou — não dá mais pra palpitar.</span>'
-          :`<button class="palp-save" data-jogo="${g.jogo}">Salvar palpite</button><span class="palp-status" data-status="${g.jogo}"></span>`}
+      <div class="pt-side ${w2?'win':''}">
+        <span class="pt-fl">${real2?flag(s2):'⚪'}</span>
+        <span class="pt-nm ${real2?'':'lbl'}">${s2||'A definir'}</span>
+        <input class="pt-in" type="number" min="0" inputmode="numeric" data-side="2" data-jogo="${j}" value="${v2}" ${locked?'disabled':''}>
       </div>
+      ${penUI}
+      ${actionUI}
     </div>`;
+  }
+
+  const cols=[
+    {h:"Oitavas",ids:[89,90,91,92,93,94,95,96]},
+    {h:"Quartas",ids:[97,98,99,100]},
+    {h:"Semifinais",ids:[101,102]},
+    {h:"Final",ids:[104]},
+  ];
+  // campeão da chave pessoal
+  const champ=pickWinner(p,104);
+  const third=(()=>{const w=pickWinner(p,103);return w||null;})();
+  const colsHtml=cols.map(c=>{
+    let inner=c.ids.map(palpTie).join("");
+    if(c.h==="Final"){
+      inner+=`<div class="pt-champ"><div class="k">🏆 Seu campeão</div><div class="who">${champ?flag(champ)+' '+champ:'A definir'}</div></div>`;
+      inner+=palpTie(103);
+    }
+    return `<div class="pcol ${c.h==='Final'?'final-col':''}"><h4>${c.h}</h4>${inner}</div>`;
   }).join("");
+
   content.innerHTML=`
     <div class="palp-head">
-      <div>
-        <label class="palp-label">Quem é você?</label>
-        <select class="sel" id="palpWho">${opts}</select>
+      <div class="palp-whobox">
+        <label class="palp-label">Palpitando como:</label>
+        <div class="palp-whorow">
+          <span class="palp-bigname">${p.replace(/_/g," ")}</span>
+          <select class="sel" id="palpWho">${opts}</select>
+        </div>
       </div>
-      <div class="palp-note">Palpites do mata-mata (oitavas em diante). Você palpita o placar mesmo antes dos times serem definidos. Cada jogo fica aberto até o apito inicial; depois trava.</div>
+      <div class="palp-note">Monte sua chave: digite o placar e o vencedor avança para a próxima fase. Empate? Escolha quem passa nos pênaltis. <b>Atenção:</b> assim que você salva um jogo, ele trava — confira antes de digitar.</div>
     </div>
-    <div class="palp-grid">${cards}</div>`;
+    <div class="palp-savebar"><span class="palp-savemsg" id="palpMsg">Digite os placares — cada mudança salva automaticamente.</span></div>
+    <div class="bracket-scroll"><div class="pbracket">${colsHtml}</div></div>
+    <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--muted);margin-top:10px">Jogo 103 = disputa de 3º lugar${third?` · seu palpite: ${third}`:''}.</div>`;
 
   document.getElementById("palpWho").onchange=e=>{palpitarWho=e.target.value;palpitar();};
-  content.querySelectorAll(".palp-save").forEach(btn=>{
+
+  function flashMsg(txt,cls){const m=document.getElementById('palpMsg');if(m){m.textContent=txt;m.className='palp-savemsg '+(cls||'');}}
+
+  // inputs: atualizam só o estado local (NÃO salvam). Re-render só quando útil (não some o que você digita).
+  content.querySelectorAll(".pt-in").forEach(inp=>{
+    inp.onchange=()=>{
+      const j=+inp.dataset.jogo;
+      const card=content.querySelector(`.ptie[data-jogo="${j}"]`);
+      const ins=card.querySelectorAll(".pt-in");
+      const g1=ins[0].value===''?null:Math.max(0,parseInt(ins[0].value,10));
+      const g2=ins[1].value===''?null:Math.max(0,parseInt(ins[1].value,10));
+      if(!parts[p][j])parts[p][j]={sel1:null,sel2:null,gol1:null,gol2:null,pen:null};
+      parts[p][j].gol1=isNaN(g1)?null:g1;parts[p][j].gol2=isNaN(g2)?null:g2;
+      if(parts[p][j].gol1!==parts[p][j].gol2)parts[p][j].pen=null;
+      // re-renderiza só quando os DOIS estão preenchidos (mostra botão salvar / pênaltis)
+      // ou quando ambos vazios. No meio da digitação, não re-renderiza pra não apagar o campo.
+      const both = parts[p][j].gol1!=null && parts[p][j].gol2!=null;
+      const none = parts[p][j].gol1==null && parts[p][j].gol2==null;
+      if(both||none) palpitar();
+    };
+  });
+
+  // botões de pênaltis: marcam local, sem salvar (o salvar é no botão)
+  content.querySelectorAll(".pt-pen-btn").forEach(btn=>{
+    btn.onclick=()=>{
+      const j=+btn.dataset.pen;
+      if(!parts[p][j])parts[p][j]={sel1:null,sel2:null,gol1:null,gol2:null,pen:null};
+      parts[p][j].pen=(parts[p][j].pen===btn.dataset.val)?null:btn.dataset.val;
+      palpitar();
+    };
+  });
+
+  // botão SALVAR: persiste no Sheets e trava o jogo
+  content.querySelectorAll(".pt-save").forEach(btn=>{
+    if(btn.disabled)return;
     btn.onclick=async()=>{
-      const j=+btn.dataset.jogo;
-      const card=content.querySelector(`.palp-card[data-jogo="${j}"]`);
-      const ins=card.querySelectorAll(".palp-in");
-      const g1=ins[0].value===''?null:parseInt(ins[0].value,10);
-      const g2=ins[1].value===''?null:parseInt(ins[1].value,10);
-      const st=content.querySelector(`.palp-status[data-status="${j}"]`);
-      if(g1==null||g2==null||g1<0||g2<0){st.textContent='preencha os dois placares';st.className='palp-status err';return;}
-      st.textContent='salvando…';st.className='palp-status';btn.disabled=true;
+      const j=+btn.dataset.save;
+      const pk=parts[p][j];
+      if(!pk||pk.gol1==null||pk.gol2==null)return;
+      const st=content.querySelector(`.pt-status[data-status="${j}"]`);
+      if(st){st.textContent='salvando…';st.className='pt-status';}
+      btn.disabled=true;
       try{
-        const res=await savePick(palpitarWho, j, g1, g2);
+        const res=await savePick(p,j,pk.gol1,pk.gol2,pk.pen);
         if(res.ok){
-          st.textContent='✓ salvo';st.className='palp-status ok';
-          if(!parts[palpitarWho][j])parts[palpitarWho][j]={sel1:null,sel2:null,gol1:null,gol2:null};
-          parts[palpitarWho][j].gol1=g1;parts[palpitarWho][j].gol2=g2;
+          parts[p][j].saved=true;   // trava o jogo
+          flashMsg('✓ jogo '+j+' salvo e travado','ok');
+          palpitar();
         }else{
-          st.textContent='✗ '+(res.error||'erro');st.className='palp-status err';
+          if(st){st.textContent='✗ '+(res.error||'erro');st.className='pt-status err';}
+          btn.disabled=false;
         }
       }catch(e){
-        st.textContent='✗ sem conexão';st.className='palp-status err';
+        if(st){st.textContent='✗ sem conexão';st.className='pt-status err';}
+        btn.disabled=false;
       }
-      btn.disabled=false;
     };
   });
 }
