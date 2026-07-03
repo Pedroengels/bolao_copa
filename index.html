@@ -80,6 +80,33 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .lant-pos{font-family:'JetBrains Mono';font-weight:700;font-size:18px;color:var(--coral);min-width:34px;text-align:center;flex-shrink:0}
 .lant-left{display:flex;flex-direction:column;gap:3px;flex:1}
 .lant-emoji{font-size:30px;flex-shrink:0}
+.palp-warn{background:rgba(255,197,24,.08);border:1px solid rgba(245,197,24,.3);border-radius:12px;padding:16px 18px;color:var(--muted);font-size:13.5px}
+.palp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.palp-label{display:block;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.palp-note{font-size:12.5px;color:var(--muted);max-width:44ch}
+.palp-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.palp-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:13px 16px}
+.palp-card.locked{opacity:.6}
+.palp-meta{font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted);letter-spacing:.04em;margin-bottom:10px}
+.palp-lock{color:var(--coral)} .palp-open{color:var(--cyan)}
+.palp-row{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.palp-team{display:flex;align-items:center;gap:8px;min-width:0}
+.palp-team.right{justify-content:flex-end}
+.palp-team .flag{font-size:18px;flex-shrink:0}
+.palp-team .pn{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.palp-team .pn.lbl{font-weight:500;font-style:italic;color:var(--muted);font-size:12px}
+.palp-inputs{display:flex;align-items:center;gap:6px}
+.palp-in{width:42px;text-align:center;background:var(--ink);border:1px solid var(--border-2);color:var(--gold);font-family:'JetBrains Mono';font-weight:700;font-size:17px;border-radius:8px;padding:6px 0}
+.palp-in:focus{outline:2px solid var(--cyan);border-color:var(--cyan)}
+.palp-in:disabled{opacity:.5;cursor:not-allowed}
+.palp-actions{display:flex;align-items:center;gap:10px;margin-top:11px;min-height:20px}
+.palp-save{background:var(--cyan);border:none;color:var(--ink);font-family:'Archivo';font-weight:700;font-size:12.5px;padding:6px 14px;border-radius:8px;cursor:pointer;transition:.15s}
+.palp-save:hover{filter:brightness(1.1)}
+.palp-save:disabled{opacity:.5;cursor:wait}
+.palp-status{font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
+.palp-status.ok{color:var(--cyan)} .palp-status.err{color:var(--coral)}
+.palp-hint{font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
+@media(max-width:640px){.palp-grid{grid-template-columns:1fr}}
 .lant-badge{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--coral)}
 .lant-name{font-family:'Archivo Expanded';font-weight:800;font-size:clamp(17px,2.4vw,22px);letter-spacing:-.01em}
 .lant-sub{font-family:'JetBrains Mono';font-size:11.5px;color:var(--muted)}
@@ -205,6 +232,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-view="ranking">🏆 Ranking</button>
+    <button class="tab" data-view="palpitar">✏️ Palpites</button>
     <button class="tab" data-view="jogos">⚽ Resultados</button>
     <button class="tab" data-view="stats">📊 Estatísticas</button>
     <button class="tab" data-view="bracket">🗺️ Chaveamento</button>
@@ -217,7 +245,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 
   <div id="content"></div>
-  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v8</span></div>
+  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v11</span> · <span style="opacity:.5">palpites on/span></div>
 </div>
 
 <script>
@@ -225,6 +253,9 @@ const SEED = {"games":[{"jogo":73,"data":"2026-06-28","hora":"16:00","fase":"32 
 const SHEET_ID = "1Y1wOYhGjsSyTk88OI-nFUcB1EeZHz5WyDPoVboslbDg";
 const tabURL = sheet => `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${encodeURIComponent(sheet)}`;
 const CSV_URL = tabURL("Pagina1");
+// URL do App da Web do Apps Script (termina em /exec). Cole a sua aqui:
+const PICKS_API = "https://script.google.com/macros/s/AKfycbyo5naoJYHusasCNjqxBOsII7n8_AOUo8xe0tvHdLoka3cTyO_nXhMKsZHnmW3DXZsj/exec";
+const PICKS_ENABLED = () => PICKS_API && PICKS_API.indexOf("/exec")>0;
 const FLAGS = {"South Africa":"🇿🇦","Canada":"🇨🇦","Germany":"🇩🇪","Paraguay":"🇵🇾","Netherlands":"🇳🇱","Morocco":"🇲🇦","Brasil":"🇧🇷","Japan":"🇯🇵","France":"🇫🇷","Sweden":"🇸🇪","Ivory Coast":"🇨🇮","Norway":"🇳🇴","Mexico":"🇲🇽","Equador":"🇪🇨","England":"🏴󠁧󠁢󠁥󠁮󠁧󠁿","Congo":"🇨🇩","USA":"🇺🇸","Bosnia":"🇧🇦","Belgium":"🇧🇪","Senegal":"🇸🇳","Portugal":"🇵🇹","Croatia":"🇭🇷","Spain":"🇪🇸","Austria":"🇦🇹","Switzerland":"🇨🇭","Argelia":"🇩🇿","Argentina":"🇦🇷","Cape Verde":"🇨🇻","Colombia":"🇨🇴","Gana":"🇬🇭","Australia":"🇦🇺","Egypt":"🇪🇬"};
 const flag = t => FLAGS[t] || "🏳️";
 const EXACT_PTS=3, RESULT_PTS=1;
@@ -292,7 +323,36 @@ async function fetchResults(){
     sync.className='sync err';
     txt.textContent='Sem conexão com a planilha — usando dados salvos';
   }
+  try{ await fetchPicksFromSheet(); }catch(e){}
   render();
+}
+
+// Lê a aba "Palpites" (via Apps Script GET) e sobrepõe os palpites do xlsx.
+async function fetchPicksFromSheet(){
+  if(!PICKS_ENABLED()) return;
+  const r=await fetch(PICKS_API,{cache:'no-store',redirect:'follow'});
+  if(!r.ok) throw new Error('picks HTTP '+r.status);
+  const data=await r.json();
+  if(!data.ok || !Array.isArray(data.picks)) return;
+  for(const pk of data.picks){
+    const p=pk.participante, j=String(pk.jogo);
+    if(!p || !parts[p]) continue;
+    if(pk.gol1==null || pk.gol2==null) continue;
+    if(!parts[p][j]) parts[p][j]={sel1:null,sel2:null,gol1:null,gol2:null};
+    parts[p][j].gol1=pk.gol1; parts[p][j].gol2=pk.gol2;
+  }
+}
+
+// Envia um palpite pro Apps Script (POST). Retorna {ok, error?}
+async function savePick(participante, jogo, gol1, gol2){
+  if(!PICKS_ENABLED()) return {ok:false, error:'API de palpites não configurada'};
+  const r=await fetch(PICKS_API,{
+    method:'POST',
+    redirect:'follow',
+    headers:{'Content-Type':'text/plain;charset=utf-8'}, // text/plain evita preflight CORS
+    body:JSON.stringify({participante, jogo, gol1, gol2})
+  });
+  return await r.json();
 }
 
 const hasResult=j=>{const o=off[j];return o&&o.gol1!=null&&o.gol2!=null;};
@@ -628,8 +688,82 @@ function bracket(){
     <div style="font-family:'JetBrains Mono';font-size:11px;color:var(--muted);margin-top:10px">Os confrontos se preenchem automaticamente conforme os vencedores são definidos na planilha. Jogo 103 = disputa de 3º lugar${third?` · atual: ${third}`:''}.</div>`;
 }
 
+let palpitarWho = players[0];
+function palpitar(){
+  if(!PICKS_ENABLED()){
+    content.innerHTML=`<div class="palp-warn">✏️ A entrada de palpites ainda não está configurada. O organizador precisa publicar o Apps Script e colar a URL no dashboard.</div>`;
+    return;
+  }
+  const opts=players.map(p=>`<option value="${p}" ${p===palpitarWho?'selected':''}>${p.replace(/_/g," ")}</option>`).join("");
+  // oitavas em diante (89-104): confrontos do mata-mata
+  const gs=games.filter(g=>g.jogo>=89&&g.jogo<=104);
+  const cards=gs.map(g=>{
+    const[s1,s2]=displayTeams(g);
+    const real1=isRealTeam(s1),real2=isRealTeam(s2);
+    const ko=gameStart(g);const started=ko!=null && Date.now()>=ko;
+    const done=hasResult(g.jogo);
+    const locked=started||done;
+    const pk=parts[palpitarWho]?.[g.jogo]||{};
+    const v1=pk.gol1!=null?pk.gol1:'';const v2=pk.gol2!=null?pk.gol2:'';
+    const fl1=real1?`<span class="flag">${flag(s1)}</span>`:'';
+    const fl2=real2?`<span class="flag">${flag(s2)}</span>`:'';
+    return `<div class="palp-card ${locked?'locked':''}" data-jogo="${g.jogo}">
+      <div class="palp-meta">Jogo ${g.jogo} · ${g.fase} · ${g.data} ${g.hora} ${locked?'· <span class="palp-lock">🔒 travado</span>':'· <span class="palp-open">aberto</span>'}</div>
+      <div class="palp-row">
+        <div class="palp-team">${fl1}<span class="pn ${real1?'':'lbl'}">${s1||'A definir'}</span></div>
+        <div class="palp-inputs">
+          <input class="palp-in" type="number" min="0" inputmode="numeric" data-side="1" value="${v1}" ${locked?'disabled':''}>
+          <span class="vs">×</span>
+          <input class="palp-in" type="number" min="0" inputmode="numeric" data-side="2" value="${v2}" ${locked?'disabled':''}>
+        </div>
+        <div class="palp-team right"><span class="pn ${real2?'':'lbl'}">${s2||'A definir'}</span>${fl2}</div>
+      </div>
+      <div class="palp-actions">
+        ${locked?'<span class="palp-hint">Jogo já começou — não dá mais pra palpitar.</span>'
+          :`<button class="palp-save" data-jogo="${g.jogo}">Salvar palpite</button><span class="palp-status" data-status="${g.jogo}"></span>`}
+      </div>
+    </div>`;
+  }).join("");
+  content.innerHTML=`
+    <div class="palp-head">
+      <div>
+        <label class="palp-label">Quem é você?</label>
+        <select class="sel" id="palpWho">${opts}</select>
+      </div>
+      <div class="palp-note">Palpites do mata-mata (oitavas em diante). Você palpita o placar mesmo antes dos times serem definidos. Cada jogo fica aberto até o apito inicial; depois trava.</div>
+    </div>
+    <div class="palp-grid">${cards}</div>`;
+
+  document.getElementById("palpWho").onchange=e=>{palpitarWho=e.target.value;palpitar();};
+  content.querySelectorAll(".palp-save").forEach(btn=>{
+    btn.onclick=async()=>{
+      const j=+btn.dataset.jogo;
+      const card=content.querySelector(`.palp-card[data-jogo="${j}"]`);
+      const ins=card.querySelectorAll(".palp-in");
+      const g1=ins[0].value===''?null:parseInt(ins[0].value,10);
+      const g2=ins[1].value===''?null:parseInt(ins[1].value,10);
+      const st=content.querySelector(`.palp-status[data-status="${j}"]`);
+      if(g1==null||g2==null||g1<0||g2<0){st.textContent='preencha os dois placares';st.className='palp-status err';return;}
+      st.textContent='salvando…';st.className='palp-status';btn.disabled=true;
+      try{
+        const res=await savePick(palpitarWho, j, g1, g2);
+        if(res.ok){
+          st.textContent='✓ salvo';st.className='palp-status ok';
+          if(!parts[palpitarWho][j])parts[palpitarWho][j]={sel1:null,sel2:null,gol1:null,gol2:null};
+          parts[palpitarWho][j].gol1=g1;parts[palpitarWho][j].gol2=g2;
+        }else{
+          st.textContent='✗ '+(res.error||'erro');st.className='palp-status err';
+        }
+      }catch(e){
+        st.textContent='✗ sem conexão';st.className='palp-status err';
+      }
+      btn.disabled=false;
+    };
+  });
+}
+
 function render(){document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));
-  if(view==="ranking")ranking();else if(view==="jogos")jogos();else if(view==="stats")stats();else bracket();}
+  if(view==="ranking")ranking();else if(view==="jogos")jogos();else if(view==="stats")stats();else if(view==="bracket")bracket();else palpitar();}
 document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;view=b.dataset.view;render();});
 document.getElementById("refreshBtn").onclick=fetchResults;
 window.addEventListener("resize",()=>{if(view==="stats")stats();});
