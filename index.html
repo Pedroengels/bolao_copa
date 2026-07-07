@@ -251,6 +251,9 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .pt-save:hover{filter:brightness(1.1)}
 .pt-save.disabled,.pt-save:disabled{background:var(--border-2);color:var(--muted);cursor:not-allowed;font-size:10.5px;font-weight:600}
 .pt-lockmsg{font-family:'JetBrains Mono';font-size:10px;color:var(--muted);letter-spacing:.05em}
+.pt-badge{font-family:'JetBrains Mono';font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:10px;font-weight:700}
+.pt-badge.inh{background:rgba(245,197,24,.14);color:var(--gold)}
+.pt-badge.rl{background:rgba(79,214,201,.14);color:var(--cyan)}
 .pt-champ{background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid rgba(245,197,24,.4);border-radius:11px;padding:14px;text-align:center;margin-bottom:12px}
 .pt-champ .k{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
 .pt-champ .who{font-family:'Archivo Expanded';font-weight:800;font-size:16px;color:var(--gold);margin-top:5px}
@@ -292,7 +295,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 
   <div id="content"></div>
-  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v18</span> · <span style="opacity:.5">palpites on/span></div>
+  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v19</span> · <span style="opacity:.5">palpites on/span></div>
 </div>
 
 <script>
@@ -413,7 +416,7 @@ function scorePick(pick,o){
   if(outcome(pick.gol1,pick.gol2)===outcome(o.gol1,o.gol2)) return {pts:RESULT_PTS,tag:"acertou",state:"result"};
   return {pts:0,tag:"",state:"wrong"};
 }
-function totalFor(p){let t=0,exact=0,hits=0,made=0;for(const g of games){const o=off[g.jogo];if(!o||o.gol1==null||o.gol2==null)continue;const pk=parts[p]?.[g.jogo];if(pk&&pk.gol1!=null&&pk.gol2!=null)made++;const s=scorePick(pk,o);t+=s.pts;if(s.state==="exact")exact++;if(s.pts>0)hits++;}return{t,exact,hits,made};}
+function totalFor(p){let t=0,exact=0,hits=0,made=0;for(const g of games){const o=off[g.jogo];if(!o||o.gol1==null||o.gol2==null)continue;const pk=parts[p]?.[g.jogo];if(pk&&pk.gol1!=null&&pk.gol2!=null)made++;const s=(g.jogo>=89)?scoreKO(p,g.jogo):scorePick(pk,o);t+=s.pts;if(s.state==="exact")exact++;if(s.pts>0)hits++;}return{t,exact,hits,made};}
 function playedCount(){return games.filter(g=>hasResult(g.jogo)).length;}
 function teamsFor(g){const o=off[g.jogo]||{};let s1=o.sel1,s2=o.sel2;if(!s1||!s2){for(const p of players){const pk=parts[p][g.jogo];if(pk&&pk.sel1&&pk.sel2){s1=s1||pk.sel1;s2=s2||pk.sel2;}}}return[s1,s2];}
 
@@ -511,6 +514,75 @@ function pickDisplayTeams(p, g){
   const b=BR[String(j)];if(!b)return[null,null];
   const [h,a]=pickTeams(p,j);
   return [h||slotLabel(b.home), a||slotLabel(b.away)];
+}
+
+// ===== MODELO ALTERNADO DO MATA-MATA =====
+// Fases REAIS (palpita sobre os classificados oficiais): Oitavas 89-96, Semis 101-102.
+// Fases HERDADAS (confronto vem dos vencedores que a pessoa palpitou na fase anterior): Quartas 97-100, Final/3º 103-104.
+function phaseKind(j){
+  j=Number(j);
+  if(j>=89&&j<=96) return 'real';
+  if(j>=97&&j<=100) return 'inherited';
+  if(j>=101&&j<=102) return 'real';
+  if(j===103||j===104) return 'inherited';
+  return 'real';
+}
+// vencedor que a pessoa apontou no jogo j (pelo placar/pênaltis dela), usando os times que ELA via naquele jogo
+function koWinner(p, j){
+  j=Number(j);
+  const [h,a]=koMatchup(p,j);
+  if(!h||!a) return null;
+  const pk=parts[p]?.[j];
+  if(!pk||pk.gol1==null||pk.gol2==null) return null;
+  if(pk.gol1>pk.gol2) return h;
+  if(pk.gol2>pk.gol1) return a;
+  if(pk.pen==='sel1') return h;
+  if(pk.pen==='sel2') return a;
+  return null;
+}
+// os dois times do jogo j na visão da PESSOA (real se fase real; herdado dos vencedores palpitados se herdada)
+function koMatchup(p, j){
+  j=Number(j);
+  const b=BR[String(j)];
+  if(!b) return [null,null];
+  if(phaseKind(j)==='real'){
+    // confronto oficial (resolve pelos resultados reais)
+    return [resolveSlot(b.home), resolveSlot(b.away)];
+  }
+  // herdado: cada lado vem do vencedor que a pessoa palpitou no jogo alimentador
+  const side=slot=>{
+    if(!slot) return null;
+    if(slot.team) return slot.team;
+    if(slot.win!=null) return koWinner(p, slot.win);
+    if(slot.lose!=null){ // perdedor (3º lugar) na visão da pessoa
+      const g=slot.lose;const[h,a]=koMatchup(p,g);const w=koWinner(p,g);
+      if(!h||!a||!w) return null; return w===h?a:h;
+    }
+    return null;
+  };
+  return [side(b.home), side(b.away)];
+}
+// confronto REAL oficial do jogo j (os dois classificados de verdade)
+function realMatchup(j){
+  const b=BR[String(j)];if(!b)return[null,null];
+  return [resolveSlot(b.home), resolveSlot(b.away)];
+}
+// pontuação de um jogo do mata-mata (89+) respeitando o modelo alternado
+function scoreKO(p, j){
+  const o=off[j];
+  if(!o||o.gol1==null||o.gol2==null) return {pts:0,state:'pending'};
+  const pk=parts[p]?.[j];
+  if(!pk||pk.gol1==null||pk.gol2==null) return {pts:0,state:'nopick'};
+  if(phaseKind(j)==='inherited'){
+    // só pontua se o confronto que a pessoa montou == confronto real do jogo
+    const [ph,pa]=koMatchup(p,j);      // times que a pessoa levou até aqui
+    const [rh,ra]=realMatchup(j);      // times reais
+    if(!ph||!pa||!rh||!ra) return {pts:0,state:'wrong'};
+    const sameMatch = (ph===rh&&pa===ra)||(ph===ra&&pa===rh);
+    if(!sameMatch) return {pts:0,state:'wrong'}; // confronto "queimado"
+  }
+  // fase real, ou herdada com confronto batendo: pontua pelo placar normal
+  return scorePick(pk,o);
 }
 
 const content=document.getElementById("content");
@@ -794,9 +866,14 @@ function palpitar(){
   // um confronto editável no formato de chave
   function palpTie(j){
     const g=games.find(x=>x.jogo===j);
-    const[s1,s2]=displayTeams(g);                      // confrontos REAIS (resultados oficiais)
+    const kind=phaseKind(j);
+    const b=BR[String(j)]||{};
+    const[s1,s2]=koMatchup(p,j);                       // real nas fases reais; herdado nas herdadas
     const real1=isRealTeam(s1),real2=isRealTeam(s2);
-    const bothReal=real1&&real2;                        // só dá pra palpitar quando os 2 times saíram
+    const bothReal=real1&&real2;                        // só dá pra palpitar quando os 2 lados existem
+    // rótulo pra exibir quando o lado ainda não está definido
+    const disp1 = real1?s1:(kind==='inherited'?'aguardando seu palpite':slotLabel(b.home)||'A definir');
+    const disp2 = real2?s2:(kind==='inherited'?'aguardando seu palpite':slotLabel(b.away)||'A definir');
     const ko=gameStart(g);const started=ko!=null && Date.now()>=ko;
     const done=hasResult(j);
     const pk=parts[p]?.[j]||{};
@@ -832,16 +909,17 @@ function palpitar(){
         <span class="pt-status" data-status="${j}"></span></div>`;
     }
     const st=(lockedByTime||saved)?`<span class="pt-lock">🔒</span>`:(waiting?`<span class="pt-lock">⏳</span>`:'');
+    const badge=kind==='inherited'?`<span class="pt-badge inh" title="Confronto vem do que você palpitou na fase anterior. Só pontua se bater com o confronto real.">sua chave</span>`:`<span class="pt-badge rl" title="Confronto real dos classificados.">real</span>`;
     return `<div class="ptie ${locked?'locked':''} ${winner?'decided':''}" data-jogo="${j}">
-      <div class="pt-head"><span class="pt-jn">Jogo ${j}</span>${st}</div>
+      <div class="pt-head"><span class="pt-jn">Jogo ${j}</span>${badge}${st}</div>
       <div class="pt-side ${w1?'win':''}">
         <span class="pt-fl">${real1?flag(s1):'⚪'}</span>
-        <span class="pt-nm ${real1?'':'lbl'}">${s1||'A definir'}</span>
+        <span class="pt-nm ${real1?'':'lbl'}">${disp1}</span>
         <input class="pt-in" type="number" min="0" inputmode="numeric" data-side="1" data-jogo="${j}" value="${v1}" ${locked?'disabled':''}>
       </div>
       <div class="pt-side ${w2?'win':''}">
         <span class="pt-fl">${real2?flag(s2):'⚪'}</span>
-        <span class="pt-nm ${real2?'':'lbl'}">${s2||'A definir'}</span>
+        <span class="pt-nm ${real2?'':'lbl'}">${disp2}</span>
         <input class="pt-in" type="number" min="0" inputmode="numeric" data-side="2" data-jogo="${j}" value="${v2}" ${locked?'disabled':''}>
       </div>
       ${penUI}
