@@ -156,6 +156,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .picks-acc summary:hover{color:var(--cyan)}
 .picks-acc .acc-label{font-weight:600}
 .picks-acc .acc-count{margin-left:auto;font-size:10.5px;color:var(--muted);opacity:.8}
+.acc-burn{color:var(--coral);font-weight:600}
 .picks-acc .acc-caret{transition:transform .2s;font-size:13px}
 .picks-acc[open] .acc-caret{transform:rotate(180deg)}
 .picks-acc[open] summary{color:var(--cyan)}
@@ -295,7 +296,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
   </div>
 
   <div id="content"></div>
-  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v19</span> · <span style="opacity:.5">palpites on/span></div>
+  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v20</span> · <span style="opacity:.5">palpites on/span></div>
 </div>
 
 <script>
@@ -689,8 +690,20 @@ function jogos(){
     const real1=isRealTeam(s1),real2=isRealTeam(s2);
     const w1=done&&o.gol1>o.gol2, w2=done&&o.gol2>o.gol1, penW1=done&&o.pen==='sel1', penW2=done&&o.pen==='sel2';
     let pickRows="";
+    const isKO = g.jogo>=89;
+    const isInherited = isKO && phaseKind(g.jogo)==='inherited';
+    const burned = p => {
+      if(!isInherited) return false;
+      const [ph,pa]=koMatchup(p,g.jogo);
+      const [rh,ra]=realMatchup(g.jogo);
+      if(!ph||!pa||!rh||!ra) return true;
+      return !((ph===rh&&pa===ra)||(ph===ra&&pa===rh));
+    };
     {
-      const scored=players.map(p=>({p,pk:parts[p]?.[g.jogo],s:scorePick(parts[p]?.[g.jogo],done?o:null)})).sort((a,b)=>b.s.pts-a.s.pts);
+      const scored=players
+        .filter(p=>!burned(p))
+        .map(p=>({p,pk:parts[p]?.[g.jogo],s:isKO?scoreKO(p,g.jogo):scorePick(parts[p]?.[g.jogo],done?o:null)}))
+        .sort((a,b)=>b.s.pts-a.s.pts);
       pickRows=scored.map(row=>{const pk=row.pk;const sc=(pk&&pk.gol1!=null&&pk.gol2!=null)?`${pk.gol1}–${pk.gol2}`:"—";
         const cls=row.s.state==="exact"?"pts-exact":row.s.state==="result"?"pts-result":"pts-zero";
         const shown=done?`<span class="${cls}">+${row.s.pts}<span class="tag">${row.s.tag||'zero'}</span></span>`:`<span class="pick-pts" style="color:var(--muted)">·</span>`;
@@ -700,8 +713,14 @@ function jogos(){
     const penNote=(done&&o.pen)?`<div class="pen-note">🏆 ${o.pen==='sel1'?s1:s2} avançou nos pênaltis</div>`:"";
     const fl1=real1?`<span class="flag">${flag(s1)}</span>`:"";
     const fl2=real2?`<span class="flag">${flag(s2)}</span>`:"";
-    const nPicks=players.filter(p=>{const pk=parts[p]?.[g.jogo];return pk&&pk.gol1!=null&&pk.gol2!=null;}).length;
-    const picksHtml=`<details class="picks-acc"><summary><span class="acc-label">Ver palpites & pontos</span><span class="acc-count">${nPicks} palpites</span><span class="acc-caret">▾</span></summary><div class="picks">${pickRows||'<div class="empty">Ninguém palpitou.</div>'}</div></details>`;
+    const nPicks=players.filter(p=>{
+      const pk=parts[p]?.[g.jogo];
+      if(!pk||pk.gol1==null||pk.gol2==null) return false;
+      return !burned(p);
+    }).length;
+    const burnedCount = isInherited ? players.filter(p=>{const pk=parts[p]?.[g.jogo];return pk&&pk.gol1!=null&&pk.gol2!=null&&burned(p);}).length : 0;
+    const burnLabel = isInherited && burnedCount>0 ? ` <span class="acc-burn">(${burnedCount} queimados)</span>` : '';
+    const picksHtml=`<details class="picks-acc"><summary><span class="acc-label">Ver palpites & pontos</span><span class="acc-count">${nPicks} palpites${burnLabel}</span><span class="acc-caret">▾</span></summary><div class="picks">${pickRows||'<div class="empty">Ninguém montou o confronto correto.</div>'}</div></details>`;
     return `<div class="match ${done?'done':''}">
       <div class="match-head"><span class="match-meta">Jogo <b>${g.jogo}</b> · ${g.cruzamento} · ${g.data} ${g.hora}</span>
       <span class="status ${done?'done':'wait'}">${done?'Final':'Aguardando'}</span></div>
