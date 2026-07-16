@@ -5,43 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Bolão · 2ª Fase — Copa 2026</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Expanded:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
-:root{--chalk:#f4faf6;--gold:#f5c518;--cyan:#4fd6c9;--coral:#ff6b5e;--ink:#08241b;--muted:#8fb4a5;--card:#0f2e24;--card-2:#123a2c;--border:rgba(233,245,238,.12);--border-2:rgba(233,245,238,.22);--exact:#f5c518;--result:#4fd6c9;--wrong:#3b5248}
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Expanded:wght@600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Cinzel:wght@600;700;800;900&display=swap');
+:root{--chalk:#f2e6c8;--gold:#f4c430;--gold-2:#fff3cf;--gold-deep:#a8791a;--cyan:#e8913a;--coral:#c4162a;--scarlet:#c4162a;--ink:#000;--muted:#8a7f66;--card:#0d0a06;--card-2:#141009;--border:rgba(244,196,48,.14);--border-2:rgba(244,196,48,.32);--exact:#f4c430;--result:#e8913a;--wrong:#3a1e1e}
 *{box-sizing:border-box}html,body{margin:0;padding:0}
-body{background:radial-gradient(1200px 500px at 80% -10%, rgba(79,214,201,.10), transparent 60%),linear-gradient(180deg,#08281e 0%, #061c15 100%);color:var(--chalk);font-family:'Archivo',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(1200px 600px at 50% -10%,rgba(244,196,48,.08),transparent 62%),#000;color:var(--chalk);font-family:'Archivo',system-ui,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 .wrap{max-width:1180px;margin:0 auto;padding:26px 20px 80px}
 header.top{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:20px;border-bottom:1px solid var(--border)}
 .brand{display:flex;flex-direction:column;gap:6px}
-.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);font-weight:500}
-.title{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:clamp(28px,5vw,46px);line-height:.95;letter-spacing:-.01em;margin:0}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:500;opacity:.7}
+.title{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:clamp(28px,5vw,46px);line-height:.95;letter-spacing:-.01em;margin:0;background:linear-gradient(180deg,#fff3cf 0%,var(--gold) 55%,var(--gold-deep) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 18px rgba(244,196,48,.28))}
 .title .accent{color:var(--gold)}
 .subtitle{color:var(--muted);font-size:14px;max-width:52ch}
 .header-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
 .sync{display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
 .sync .dot{width:8px;height:8px;border-radius:50%;background:var(--muted)}
-.sync.ok .dot{background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
-.sync.err .dot{background:var(--coral)}
-.refresh-btn{background:transparent;border:1px solid var(--border-2);color:var(--muted);font-family:'JetBrains Mono';font-size:11px;padding:7px 12px;border-radius:8px;cursor:pointer;transition:.15s}
-.refresh-btn:hover{border-color:var(--cyan);color:var(--cyan)}
-.datasrc{background:rgba(79,214,201,.07);border:1px solid var(--border);border-radius:10px;padding:11px 15px;margin-bottom:22px;font-size:12.5px;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
-.datasrc b{color:var(--cyan)}
-.tabs{display:flex;gap:4px;margin-bottom:22px;flex-wrap:wrap;background:var(--card);padding:5px;border-radius:12px;border:1px solid var(--border);width:fit-content}
-.tab{background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;padding:9px 18px;border-radius:8px;transition:.15s}
-.tab:hover{color:var(--chalk)}
-.tab.active{background:var(--gold);color:var(--ink)}
-.legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:20px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--muted)}
+.sync.ok .dot{background:var(--gold);box-shadow:0 0 10px var(--gold)}
+.sync.err .dot{background:var(--scarlet);box-shadow:0 0 10px var(--scarlet)}
+.refresh-btn{background:transparent;border:1px solid var(--border-2);color:var(--gold);font-family:'JetBrains Mono';font-size:11px;padding:7px 12px;border-radius:8px;cursor:pointer;transition:.15s}
+.refresh-btn:hover{border-color:var(--gold);color:var(--gold-2);box-shadow:0 0 14px rgba(244,196,48,.35)}
+.datasrc{background:rgba(244,196,48,.05);border:1px solid var(--border);border-radius:10px;padding:11px 15px;margin-bottom:22px;font-size:12.5px;color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+.datasrc b{color:var(--gold)}
+.tabs{display:flex;gap:4px;margin-bottom:22px;flex-wrap:wrap;background:linear-gradient(180deg,#0d0a06,#050301);padding:5px;border-radius:12px;border:1px solid var(--border);width:fit-content;box-shadow:0 6px 26px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.03)}
+.tab{background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:'Archivo',sans-serif;font-weight:600;font-size:14px;padding:9px 18px;border-radius:8px;transition:.15s;letter-spacing:.02em}
+.tab:hover{color:var(--gold-2)}
+.tab.active{background:linear-gradient(180deg,var(--gold-2),var(--gold) 55%,var(--gold-deep));color:#0b0805;box-shadow:0 0 20px rgba(244,196,48,.45),inset 0 1px 0 rgba(255,255,255,.5)}
+/* ===== Sub-abas (dentro de Estatísticas) ===== */
+.sub-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:0}
+.sub-tab{background:transparent;border:none;color:var(--muted);cursor:pointer;font-family:'Archivo',sans-serif;font-weight:600;font-size:13px;padding:10px 16px;border-radius:8px 8px 0 0;transition:.15s;border-bottom:2px solid transparent;margin-bottom:-1px}
+.sub-tab:hover{color:var(--chalk)}
+.sub-tab.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(245,197,24,.05)}
+
+/* ===== Rei de cada fase (visual) ===== */
+.kings-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin:10px 0 8px}
+.king-card{position:relative;background:linear-gradient(135deg,rgba(245,197,24,.12),rgba(245,197,24,.02));border:1px solid rgba(245,197,24,.25);border-radius:14px;padding:16px 18px;overflow:hidden}
+.king-card::before{content:"👑";position:absolute;top:-8px;right:-6px;font-size:60px;opacity:.08;transform:rotate(15deg)}
+.king-phase{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);font-weight:700;margin-bottom:8px}
+.king-who{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:18px;color:var(--chalk);line-height:1.15;margin-bottom:4px}
+.king-big{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:32px;color:var(--gold);line-height:1;margin-top:6px}
+.king-big span{font-size:12px;color:var(--muted);font-weight:600;margin-left:4px;letter-spacing:.04em}
+.king-meta{font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted);margin-top:8px}
+.king-meta b{color:var(--chalk);font-weight:700}
+
+/* ===== Retrospectiva: barra empilhada de fases ===== */
+.retro-phase-bar{margin:14px 0 22px}
+.rpb-track{display:flex;height:44px;border-radius:10px;overflow:hidden;background:var(--card);border:1px solid var(--border)}
+.rpb-seg{display:flex;align-items:center;justify-content:center;color:var(--ink);font-family:'JetBrains Mono';font-weight:700;font-size:12px;transition:.2s;min-width:0}
+.rpb-seg:hover{filter:brightness(1.15)}
+.rpb-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
+.rpb-legend span{display:inline-flex;align-items:center;gap:5px}
+.rpb-legend .sw{width:10px;height:10px;border-radius:2px;display:inline-block}
+
+/* ===== Highlights badges (mais compactos) ===== */
+.retro-badges{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 20px}
+.retro-badge{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-family:'JetBrains Mono';font-size:11px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.retro-badge b{color:var(--gold);font-weight:700}
+.retro-badge .ico{font-size:14px}
+.legend{display:none}
+/* Landing mode: só o palco em cima, abas dentro do palco */
+body.landing .wrap{padding-top:0}
+body.landing #topHeader{display:none}
+body.landing .foot{display:none}
+.tabs-slot{position:relative;z-index:4;display:flex;justify-content:center;margin:-8px auto 24px;padding:0 20px;max-width:1180px}
+.tabs-slot .tabs{background:rgba(15,10,4,.55);border:1px solid rgba(244,196,48,.18);box-shadow:0 6px 20px rgba(0,0,0,.5);padding:4px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.tabs-slot .tab{font-size:12.5px;padding:7px 14px;letter-spacing:.04em}
+.tabs-slot .tab.active{box-shadow:0 0 14px rgba(244,196,48,.4)}
+body.landing .stage{margin-top:0;border-top:none;border-radius:0}
 .legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
 .legend b{color:var(--chalk)}
-.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
-.pod{background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid var(--border);border-radius:16px;padding:22px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px}
+.podium{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px;align-items:end}
+.pod{background:linear-gradient(180deg,var(--card-2),var(--card));border:1px solid var(--border);border-radius:16px;padding:22px 18px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px;
+  box-shadow:0 6px 22px rgba(0,0,0,.28);animation:podIn .7s cubic-bezier(.2,.85,.25,1) backwards;transition:transform .18s}
+@keyframes podIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.pod:hover{transform:translateY(-3px)}
+.pod.p1{animation-delay:.05s;padding:30px 20px 26px;border-color:rgba(245,197,24,.45);
+  background:linear-gradient(180deg,rgba(245,197,24,.16),rgba(245,197,24,.04) 55%,var(--card));
+  box-shadow:0 0 34px rgba(245,197,24,.22),0 8px 26px rgba(0,0,0,.34)}
+.pod.p2{animation-delay:.16s;background:linear-gradient(180deg,rgba(205,216,210,.08),var(--card))}
+.pod.p3{animation-delay:.27s;background:linear-gradient(180deg,rgba(201,138,75,.08),var(--card))}
 .pod::before{content:"";position:absolute;inset:0 0 auto 0;height:4px}
-.pod.p1::before{background:var(--gold)}.pod.p2::before{background:#cdd8d2}.pod.p3::before{background:#c98a4b}
+.pod.p1::before{background:linear-gradient(90deg,#c9a01a,var(--gold),#fff1b8,var(--gold),#c9a01a);box-shadow:0 0 14px rgba(245,197,24,.75)}
+.pod.p2::before{background:linear-gradient(90deg,#8d9691,#cdd8d2,#f2f7f4,#cdd8d2,#8d9691)}
+.pod.p3::before{background:linear-gradient(90deg,#8a5c31,#c98a4b,#e8b380,#c98a4b,#8a5c31)}
+.pod.p1::after{content:"";position:absolute;top:-60%;left:-40%;width:45%;height:220%;transform:rotate(20deg);pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.10),transparent);animation:podShine 5s ease-in-out infinite}
+@keyframes podShine{0%{left:-40%}55%,100%{left:140%}}
 .pod .rank{font-family:'Archivo Expanded';font-weight:800;font-size:13px;letter-spacing:.1em;color:var(--muted)}
-.pod.p1 .rank{color:var(--gold)}
+.pod.p1 .rank{color:var(--gold);text-shadow:0 0 12px rgba(245,197,24,.5)}
 .pod .who{font-family:'Archivo Expanded';font-weight:800;font-size:clamp(17px,2.4vw,23px);letter-spacing:-.01em;line-height:1.05}
+.pod.p1 .who{font-size:clamp(20px,3vw,28px);color:var(--gold);text-shadow:0 2px 18px rgba(245,197,24,.35)}
 .pod .pts{font-family:'JetBrains Mono';font-size:12px;color:var(--muted);margin-top:6px}
 .pod .pts b{color:var(--chalk);font-size:26px;font-weight:700}
+.pod.p1 .pts b{color:var(--gold);font-size:32px;text-shadow:0 0 20px rgba(245,197,24,.4)}
 .pod .crown{position:absolute;top:14px;right:16px;font-size:22px}
+.pod.p1 .crown{font-size:30px;filter:drop-shadow(0 0 10px rgba(245,197,24,.8));animation:crownFloat 3s ease-in-out infinite}
+@keyframes crownFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-6deg)}}
+@media(max-width:640px){.podium{grid-template-columns:1fr}.pod.p1{padding:24px 18px}}
 .featured{background:linear-gradient(135deg,rgba(79,214,201,.10),rgba(245,197,24,.06));border:1px solid var(--border-2);border-radius:16px;padding:18px 20px;margin-bottom:22px;position:relative;overflow:hidden}
 .featured::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--gold))}
 .fx-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
@@ -80,6 +138,206 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 .lant-pos{font-family:'JetBrains Mono';font-weight:700;font-size:18px;color:var(--coral);min-width:34px;text-align:center;flex-shrink:0}
 .lant-left{display:flex;flex-direction:column;gap:3px;flex:1}
 .lant-emoji{font-size:30px;flex-shrink:0}
+/* ===== Card do campeão ===== */
+.champ-card{position:relative;background:radial-gradient(120% 140% at 50% 0%,rgba(245,197,24,.28),rgba(245,197,24,.05) 55%,rgba(245,197,24,.02));border:2px solid var(--gold);border-radius:18px;padding:32px 28px 28px;margin-bottom:22px;overflow:hidden;text-align:center;
+  box-shadow:0 0 50px rgba(245,197,24,.28),0 10px 34px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18);
+  animation:champIn .9s cubic-bezier(.2,.85,.25,1) backwards,champPulse 4s ease-in-out infinite 1s}
+@keyframes champIn{from{opacity:0;transform:scale(.94) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes champPulse{0%,100%{box-shadow:0 0 50px rgba(245,197,24,.28),0 10px 34px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18)}50%{box-shadow:0 0 76px rgba(245,197,24,.45),0 10px 34px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.18)}}
+.champ-shine{position:absolute;top:-50%;left:-30%;width:60%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);transform:rotate(20deg);animation:shine 4s infinite}
+@keyframes shine{0%{left:-30%}100%{left:130%}}
+.champ-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:8px;position:relative;z-index:1}
+.champ-tag{font-family:'JetBrains Mono';font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+.champ-year{font-family:'JetBrains Mono';font-size:11px;color:var(--muted);letter-spacing:.06em}
+.champ-name{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:clamp(30px,5.6vw,52px);letter-spacing:-.02em;line-height:1.05;margin:10px 0 14px;position:relative;z-index:1;
+  background:linear-gradient(180deg,#fff6d0 0%,var(--gold) 45%,#c9a01a 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 20px rgba(245,197,24,.45))}
+.champ-stats{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;font-family:'JetBrains Mono';font-size:12.5px;color:var(--chalk);position:relative;z-index:1}
+.champ-stats b{color:var(--gold);font-weight:700}
+.champ-gap{color:var(--cyan)}
+.champ-conf{font-size:24px;margin-top:16px;letter-spacing:10px;position:relative;z-index:1;animation:confBob 2.6s ease-in-out infinite}
+@keyframes confBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+
+/* ===== Ranking: o palco (visual de premiação) ===== */
+.stage{position:relative;left:50%;margin-left:-50vw;margin-right:-50vw;width:100vw;max-width:100vw;
+  background:#000;border-top:1px solid rgba(244,196,48,.16);border-bottom:1px solid rgba(244,196,48,.16);
+  padding:42px 0 26px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.05)}
+.stage::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(70% 80% at 0% -10%,rgba(255,214,130,.42),rgba(255,180,60,.16) 30%,transparent 60%),
+    radial-gradient(70% 80% at 100% 110%,rgba(196,22,42,.45),rgba(220,60,50,.18) 28%,transparent 60%);
+  mix-blend-mode:screen}
+.stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:180px;pointer-events:none;z-index:2;
+  background:linear-gradient(180deg,transparent,rgba(120,10,20,.35) 55%,rgba(0,0,0,.9))}
+.stage-head{position:relative;z-index:4;display:flex;align-items:center;gap:18px;margin:0 auto 22px;padding:0 30px;max-width:1180px}
+.stage-rule{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(244,196,48,.45),transparent)}
+.stage-title{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:clamp(13px,1.7vw,18px);letter-spacing:.34em;text-transform:uppercase;white-space:nowrap;
+  background:linear-gradient(180deg,#fff3cf,#f4c430 55%,#a8791a);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 16px rgba(244,196,48,.4))}
+.stage-sub{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:rgba(244,196,48,.42);white-space:nowrap}
+.stage-scroll{position:relative;z-index:1;overflow-x:auto;overflow-y:hidden;padding:0 30px 6px}
+.stage-scroll::-webkit-scrollbar{height:7px}
+.stage-scroll::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+.stage-scroll::-webkit-scrollbar-thumb{background:rgba(244,196,48,.3);border-radius:4px}
+.stage-bars{position:relative;display:flex;align-items:stretch;gap:16px;height:720px;min-width:2600px;padding-top:100px}
+.stage-bars::after{content:"";position:absolute;left:0;right:0;bottom:180px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(244,196,48,.5) 8%,rgba(244,196,48,.5) 92%,transparent)}
+.sb{position:relative;flex:0 0 116px;display:flex;flex-direction:column;z-index:1}
+.sb.podium1 .sb-pos-top{font-size:64px}
+.sb.podium2 .sb-pos-top{font-size:52px}
+.sb.podium3 .sb-pos-top{font-size:44px}
+.sb-plot{position:relative;flex:1 1 auto;min-height:0}
+/* feixe de luz sobre a barra — discreto */
+.sb-beam{position:absolute;left:50%;bottom:var(--h);width:150%;height:78px;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(ellipse 50% 100% at 50% 100%,var(--beam),transparent 74%);
+  filter:blur(5px);animation:beamIn 1.6s ease-out backwards;animation-delay:calc(var(--i)*70ms + .55s)}
+@keyframes beamIn{from{opacity:0}to{opacity:1}}
+.sb-pos-top{position:absolute;left:-14px;right:-14px;bottom:calc(var(--h) + 14px);text-align:center;
+  font-family:'Cinzel','Playfair Display',Georgia,serif;font-weight:800;font-size:32px;line-height:1;
+  letter-spacing:.02em;color:var(--c-top);
+  text-shadow:0 0 calc(6px + 20px*var(--glow)) var(--halo),0 2px 0 rgba(0,0,0,.35);
+  animation:valIn .7s ease-out backwards;animation-delay:calc(var(--i)*70ms + .75s)}
+.sb-ord{font-size:.48em;font-weight:700;margin-left:.05em;vertical-align:.55em;letter-spacing:.02em;opacity:.85}
+@keyframes valIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.sb.first .sb-pos-top{font-size:70px}
+/* a coluna: metal polido, ouro → escarlate conforme a posição */
+.sb-col{position:absolute;left:0;right:0;bottom:0;height:var(--h);border-radius:6px 6px 0 0;overflow:hidden;
+  background:linear-gradient(180deg,var(--c-top) 0%,var(--c) 42%,var(--c-bot) 100%);
+  box-shadow:0 0 calc(10px + 30px*var(--glow)) var(--halo),inset 0 1px 0 rgba(255,255,255,.55);
+  transform-origin:bottom;animation:stageRise 1.15s cubic-bezier(.16,1,.3,1) backwards;animation-delay:calc(var(--i)*70ms);transition:filter .2s}
+/* brilho cilíndrico, como uma estatueta */
+.sb-col::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,.05) 22%,rgba(255,255,255,.34) 47%,rgba(255,255,255,.06) 62%,rgba(0,0,0,.38) 100%)}
+@keyframes stageRise{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.sb:hover .sb-col{filter:brightness(1.22) saturate(1.1)}
+/* reflexo no piso do palco */
+.sb-foot{position:relative;flex:0 0 180px;height:180px;display:flex;flex-direction:column;align-items:center;gap:8px;padding-top:14px;box-sizing:border-box}
+.sb-refl{position:absolute;top:1px;left:0;right:0;height:64px;pointer-events:none;border-radius:0 0 5px 5px;
+  background:linear-gradient(180deg,var(--refl),transparent 82%);opacity:.18;filter:blur(1px)}
+.sb-val-bot{position:relative;font-family:'JetBrains Mono';font-size:13px;font-weight:700;letter-spacing:.02em;color:rgba(244,196,48,.75);display:inline-flex;align-items:baseline;gap:3px}
+.sb-val-bot .sb-pts{font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,196,48,.45)}
+.sb.first .sb-val-bot{color:var(--gold);text-shadow:0 0 10px rgba(244,196,48,.55)}
+.sb-name{position:relative;writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Archivo',sans-serif;font-size:11.5px;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-height:150px;
+  color:rgba(255,255,255,calc(.3 + .55*var(--glow)))}
+.sb.first .sb-name{font-weight:800;color:#fff;text-shadow:0 0 12px rgba(244,196,48,.5)}
+.sb.podium1 .sb-name{font-size:15px;font-weight:800;color:#fff;letter-spacing:.14em;max-height:160px}
+.sb.podium2 .sb-name{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:.12em;max-height:155px}
+.sb.podium3 .sb-name{font-size:12.5px;font-weight:700;color:rgba(255,255,255,.85);letter-spacing:.12em;max-height:152px}
+.sb.podium1 .sb-val-bot,.sb.podium2 .sb-val-bot,.sb.podium3 .sb-val-bot{font-size:15px;color:var(--gold);text-shadow:0 0 10px rgba(244,196,48,.55)}
+/* ===== confetes ===== */
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti.back{z-index:0}
+.confetti.front{z-index:3;filter:blur(.6px)}
+.cf{position:absolute;top:-24px;width:var(--w);height:var(--hh);background:var(--col);border-radius:var(--br);opacity:0;
+  animation:cfFall var(--d) linear var(--dl) infinite;will-change:transform}
+@keyframes cfFall{
+  0%{transform:translate3d(0,-24px,0) rotate(var(--rot));opacity:0}
+  7%{opacity:.95}
+  88%{opacity:.7}
+  100%{transform:translate3d(var(--dx),820px,0) rotate(calc(var(--rot) + var(--spin)));opacity:0}}
+@media(max-width:640px){.stage{padding:30px 0 18px}.stage-head{padding:0 16px;gap:12px}.stage-title{letter-spacing:.2em}.stage-sub{display:none}.stage-scroll{padding:0 16px 6px}}
+.stage{margin-bottom:30px}
+
+/* ===== Ranking clássico: gráfico de barras ===== */
+.rank-chart{margin-top:22px;background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,0));border:1px solid var(--border);border-radius:16px;padding:18px 18px 14px}
+.rc-title{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.rc-t{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:15px;color:var(--gold);letter-spacing:.01em}
+.rc-s{font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
+.rc-scroll{overflow-x:auto;overflow-y:hidden;padding-bottom:4px}
+.rc-bars{position:relative;display:flex;align-items:stretch;gap:9px;height:400px;min-width:820px;padding-top:44px}
+.rc-bars::before{content:"";position:absolute;left:0;right:0;top:44px;bottom:100px;pointer-events:none;
+  background:repeating-linear-gradient(to top,rgba(255,255,255,.05) 0 1px,transparent 1px 25%)}
+.rc-bars::after{content:"";position:absolute;left:0;right:0;bottom:100px;height:1px;background:rgba(255,255,255,.16)}
+.rb{position:relative;flex:1 1 0;min-width:32px;display:flex;flex-direction:column;z-index:1}
+.rb-plot{position:relative;flex:1 1 auto;min-height:0}
+.rb-head{position:absolute;left:0;right:0;bottom:calc(var(--h) + 7px);text-align:center;line-height:1.15}
+.rb-medal{display:block;font-size:15px;filter:drop-shadow(0 0 6px rgba(245,197,24,calc(.7*var(--glow))))}
+.rb-val{font-family:'JetBrains Mono';font-weight:700;font-size:13px;color:var(--c);text-shadow:0 0 calc(12px*var(--glow)) rgba(245,197,24,var(--glow))}
+.rb-col{position:absolute;left:0;right:0;bottom:0;height:var(--h);border-radius:8px 8px 3px 3px;overflow:hidden;
+  background:linear-gradient(180deg,var(--c-top) 0%,var(--c) 48%,var(--c-bot) 100%);
+  box-shadow:0 0 calc(22px*var(--glow)) rgba(245,197,24,calc(.5*var(--glow))),inset 0 1px 0 rgba(255,255,255,.4),0 2px 10px rgba(0,0,0,.35);
+  transform-origin:bottom;animation:rbGrow .9s cubic-bezier(.2,.85,.25,1) backwards;animation-delay:calc(var(--i)*45ms);transition:filter .15s}
+@keyframes rbGrow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.rb:hover .rb-col{filter:brightness(1.18)}
+.rb.top3 .rb-col::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(115deg,transparent 32%,rgba(255,255,255,.55) 50%,transparent 68%);
+  animation:rbShine 3.4s ease-in-out infinite;animation-delay:calc(var(--i)*.45s)}
+@keyframes rbShine{0%{transform:translateY(115%)}50%,100%{transform:translateY(-115%)}}
+.rb-foot{flex:0 0 100px;height:100px;display:flex;flex-direction:column;align-items:center;gap:5px;padding-top:9px;box-sizing:border-box}
+.rb-pos{font-family:'JetBrains Mono';font-size:10px;font-weight:700;color:var(--muted)}
+.rb.top3 .rb-pos{color:var(--gold)}
+.rb-name{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-height:78px;color:var(--muted);letter-spacing:.01em}
+.rb.top3 .rb-name{color:var(--chalk);font-weight:800}
+.rb.last .rb-name{color:var(--coral)}
+.rc-legend{display:flex;align-items:center;gap:7px;margin-top:12px;font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted)}
+.rc-sw{width:22px;height:9px;border-radius:3px;display:inline-block}
+.rc-sw.gold{background:linear-gradient(90deg,#F5C518,#f7d24d);box-shadow:0 0 10px rgba(245,197,24,.5)}
+.rc-sw.red{background:linear-gradient(90deg,#FF6B5E,#ff9188)}
+.rc-arrow{opacity:.5}
+
+/* ===== Rei de cada fase ===== */
+.king-row{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:8px 4px;border-bottom:1px dashed var(--border)}
+.king-row:last-child{border-bottom:none}
+.king-ph{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);min-width:80px}
+.king-name{font-weight:700;font-size:13.5px}
+.king-pts{font-family:'JetBrains Mono';font-weight:700;color:var(--gold)}
+.king-detail{font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted)}
+@media(max-width:640px){.king-row{grid-template-columns:1fr auto}.king-ph{grid-column:1/-1;margin-bottom:-4px}.king-detail{grid-column:1/-1;opacity:.7}}
+
+/* ===== Jogo decisivo ===== */
+.decisive{padding:6px 4px}
+.dec-g{font-weight:700;font-size:14px;color:var(--chalk);margin-bottom:4px}
+.dec-d{font-family:'JetBrains Mono';font-size:11.5px;color:var(--coral)}
+
+/* ===== Tabela cruzada ===== */
+.xt-wrap{overflow-x:auto;margin-top:8px;border:1px solid var(--border);border-radius:8px}
+.xt{border-collapse:collapse;font-family:'JetBrains Mono';font-size:11.5px;min-width:100%}
+.xt th,.xt td{border:1px solid rgba(255,255,255,.05);padding:10px 8px;text-align:center;white-space:nowrap;height:38px}
+.xt thead th{position:sticky;top:0;background:var(--card-2);z-index:1;font-weight:700;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:14px 8px}
+.xt-rank{display:inline-block;font-family:'JetBrains Mono';font-size:9px;font-weight:700;color:var(--gold);letter-spacing:.04em;opacity:.75;margin-right:3px}
+.xt .xt-jogo{text-align:left;font-weight:600;color:var(--chalk);position:sticky;left:0;background:var(--card-2);z-index:2;min-width:200px;font-size:11px;padding:12px 12px}
+.xt .xt-real{display:inline-block;margin-left:8px;color:var(--gold);font-weight:700}
+.xt-cell{font-weight:700}
+.xt-cell.xt-exact{background:rgba(245,197,24,.28);color:var(--gold)}
+.xt-cell.xt-hit{background:rgba(79,214,201,.18);color:var(--cyan)}
+.xt-cell.xt-miss{background:rgba(255,107,94,.12);color:var(--coral)}
+.xt-cell.xt-empty{color:var(--muted);opacity:.5}
+.xt-legend{font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted);margin:8px 0}
+.xt-legend .xt-exact{color:var(--gold)} .xt-legend .xt-hit{color:var(--cyan)} .xt-legend .xt-miss{color:var(--coral)} .xt-legend .xt-empty{color:var(--muted)}
+
+/* ===== Retrospectiva ===== */
+.retro-head{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.retro-whobox{margin-bottom:16px}
+.retro-summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.rs-item{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px;text-align:center}
+.rs-v{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:22px;color:var(--gold)}
+.rs-k{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+@media(max-width:640px){.retro-summary{grid-template-columns:repeat(2,1fr)}}
+.retro-highlights{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0 20px}
+.rh-card{background:linear-gradient(135deg,rgba(79,214,201,.08),rgba(245,197,24,.04));border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.rh-card .k{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.rh-card .v{font-weight:700;font-size:13px;color:var(--chalk)}
+@media(max-width:900px){.retro-highlights{grid-template-columns:repeat(2,1fr)}}
+.retro-section-title{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:700;font-size:14px;color:var(--gold);margin:24px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.retro-phases{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.retro-phase{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.rp-name{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px}
+.rp-pts{font-family:'Archivo Expanded','Archivo',sans-serif;font-weight:800;font-size:26px;color:var(--gold);line-height:1}
+.rp-pts span{font-size:12px;color:var(--muted);font-weight:600;margin-left:3px}
+.rp-detail{font-family:'JetBrains Mono';font-size:10.5px;color:var(--muted);margin-top:6px}
+.retro-timeline{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.retro-tl{border:1px solid var(--border);border-radius:9px;padding:10px 12px;background:var(--card)}
+.retro-tl.ok{border-color:rgba(245,197,24,.4);background:rgba(245,197,24,.06)}
+.retro-tl.partial{border-color:rgba(79,214,201,.35);background:rgba(79,214,201,.05)}
+.retro-tl.miss{opacity:.7}
+.retro-tl .tl-j{font-family:'JetBrains Mono';font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.retro-tl .tl-match{font-weight:700;font-size:12.5px;margin-bottom:6px}
+.retro-tl .tl-scores{display:flex;gap:12px;font-family:'JetBrains Mono';font-size:11px;color:var(--muted)}
+.retro-tl .tl-scores b{color:var(--chalk);font-weight:700}
+.retro-tl .tl-verdict{font-family:'JetBrains Mono';font-size:10.5px;margin-top:6px;color:var(--muted)}
+.retro-tl.ok .tl-verdict{color:var(--gold)}
+.retro-tl.partial .tl-verdict{color:var(--cyan)}
 .palp-warn{background:rgba(255,197,24,.08);border:1px solid rgba(245,197,24,.3);border-radius:12px;padding:16px 18px;color:var(--muted);font-size:13.5px}
 .palp-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)}
 .palp-label{display:block;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
@@ -268,7 +526,7 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
+  <header class="top" id="topHeader">
     <div class="brand">
       <span class="eyebrow">Bolão do Peno · Copa do Mundo 2026</span>
       <h1 class="title">2ª Fase <span class="accent">— Mata-mata</span></h1>
@@ -280,23 +538,15 @@ table.board tr:hover td{background:rgba(255,255,255,.02)}
     </div>
   </header>
 
+  <div id="content"></div>
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-view="ranking">🏆 Ranking</button>
-    <button class="tab" data-view="palpitar">✏️ Palpites</button>
-    <button class="tab" data-view="jogos">⚽ Resultados</button>
     <button class="tab" data-view="stats">📊 Estatísticas</button>
+    <button class="tab" data-view="retro">📖 Retrospectiva</button>
+    <button class="tab" data-view="jogos">⚽ Resultados</button>
     <button class="tab" data-view="bracket">🗺️ Chaveamento</button>
   </div>
-
-  <div class="legend">
-    <span><span class="dot" style="background:var(--exact)"></span><b>3 pts</b> — placar exato</span>
-    <span><span class="dot" style="background:var(--result)"></span><b>1 pt</b> — acertou quem venceu (ou empate)</span>
-    <span><span class="dot" style="background:var(--wrong)"></span><b>0 pts</b> — errou</span>
-  </div>
-
-  <div id="content"></div>
-  <div class="foot">Painel de visualização · resultados sincronizados via Google Sheets · placar exato = 3 · vencedor = 1 · <span style="opacity:.5">v20</span> · <span style="opacity:.5">palpites on/span></div>
 </div>
 
 <script>
@@ -587,7 +837,7 @@ function scoreKO(p, j){
 }
 
 const content=document.getElementById("content");
-let view="ranking",activeRound=rounds[0];
+let view="ranking",activeRound=rounds[0],statsSubView="overview";
 
 // datetime of a game in Brasília time (UTC-3), returns ms epoch
 function gameStart(g){
@@ -645,41 +895,61 @@ function featuredCard(){
 
 function ranking(){
   const rows=players.map(p=>({p,...totalFor(p)})).sort((a,b)=>b.t-a.t||b.exact-a.exact||a.p.localeCompare(b.p));
-  const max=Math.max(1,rows[0]?.t||1), played=playedCount();
-  let podium="";
-  if(played>0){const medals=["🥇","🥈","🥉"];podium=`<div class="podium">`+rows.slice(0,3).map((r,i)=>`
-    <div class="pod p${i+1}"><span class="crown">${medals[i]}</span><span class="rank">${i+1}º LUGAR</span>
-    <span class="who">${r.p.replace(/_/g," ")}</span><span class="pts"><b>${r.t}</b> pts · ${r.exact} placares exatos</span></div>`).join("")+`</div>`;}
-  const n=rows.length;
-  const lastIdx=n-1;
-  // table starts from 4th place (top 3 on podium). Last place (pos n) becomes the lanterna row.
-  const body=rows.map((r,i)=>({r,i})).slice(3).map(({r,i})=>{
-    // last place → special lanterna row spanning the table
-    if(i===lastIdx && played>0){
-      const zeros=r.made-r.hits;
-      return `<tr class="lanterna-row"><td colspan="6">
-        <div class="lanterna">
-          <div class="lant-pos">${i+1}º</div>
-          <div class="lant-left"><span class="lant-badge">🔴 Lanterna</span>
-            <span class="lant-name">${r.p.replace(/_/g," ")}</span>
-            <span class="lant-sub">${r.t} pts · ${r.exact} exatos · ${zeros} zerados</span></div>
-          <div class="lant-emoji">👈😂</div>
-        </div></td></tr>`;
-    }
-    const isBottom = i>=n-3;             // last three overall stay red
-    const rowCls = isBottom ? 'bottom' : '';
-    const posCls = isBottom ? 'bad' : '';
-    const totCls = isBottom ? 'total bad' : 'total';
-    const barCls = isBottom ? 'bar-bad' : '';
-    return `<tr class="${rowCls}"><td class="pos ${posCls}">${i+1}</td><td class="name-cell">${r.p.replace(/_/g," ")}</td>
-    <td class="num hide-sm">${r.exact}</td><td class="num hide-sm">${r.hits}</td>
-    <td class="hide-sm"><div class="bar"><span class="${barCls}" style="width:${Math.round(r.t/max*100)}%"></span></div></td>
-    <td class="num"><span class="${totCls}">${r.t}</span></td></tr>`;
+  const played=playedCount(), n=rows.length;
+  const max=Math.max(1,rows[0]?.t||1);
+  if(played===0){content.innerHTML=`<div class="empty">O ranking aparece conforme os placares entram na planilha.</div>`;return;}
+  const GOLD_S=[244,196,48], SCARLET=[196,22,42];
+  const rgb=c=>`rgb(${c[0]},${c[1]},${c[2]})`;
+  const rgba=(c,a)=>`rgba(${c[0]},${c[1]},${c[2]},${a})`;
+  const lighten=(c,a)=>c.map(v=>Math.round(Math.min(255,v+(255-v)*a)));
+  const darken=(c,a)=>c.map(v=>Math.round(v*(1-a)));
+  const stageBars=rows.map((r,i)=>{
+    const t=n>1?i/(n-1):0;
+    const c=GOLD_S.map((v,k)=>Math.round(v+(SCARLET[k]-v)*t));
+    const glow=1-t;
+    const pct=Math.max(3,Math.round(r.t/max*100));
+    const style=[`--c:${rgb(c)}`,`--c-top:${rgb(lighten(c,.62))}`,`--c-bot:${rgb(darken(c,.52))}`,
+      `--h:${pct}%`,`--i:${i}`,`--glow:${glow.toFixed(2)}`,
+      `--halo:${rgba(c,(0.18+0.45*glow).toFixed(2))}`,
+      `--beam:${rgba(lighten(c,.4),(0.05+0.20*glow).toFixed(2))}`,
+      `--refl:${rgba(c,0.55)}`].join(';');
+    return `<div class="sb${i===0?' first podium1':i===1?' podium2':i===2?' podium3':''}" style="${style}"
+      title="${r.p.replace(/_/g," ")} — ${i+1}º · ${r.t} pts · ${r.exact} exatos · ${r.hits} acertos">
+      <div class="sb-plot">
+        <div class="sb-beam"></div>
+        <div class="sb-pos-top">${String(i+1).padStart(2,"0")}<span class="sb-ord">º</span></div>
+        <div class="sb-col"></div>
+      </div>
+      <div class="sb-foot">
+        <div class="sb-refl"></div>
+        <span class="sb-val-bot">${r.t}<span class="sb-pts">pts</span></span>
+        <span class="sb-name">${r.p.replace(/_/g," ")}</span>
+      </div>
+    </div>`;
   }).join("");
-  const tableHtml = body
-    ? `<table class="board"><thead><tr><th style="width:30px">#</th><th>Participante</th><th class="num hide-sm">Exatos</th><th class="num hide-sm">Acertos</th><th class="hide-sm">Progresso</th><th class="num">Pontos</th></tr></thead><tbody>${body}</tbody></table>`
-    : `<div class="empty">Só o pódio por enquanto.</div>`;
-  content.innerHTML=featuredCard()+podium+`<div style="margin:6px 0 12px;font-family:'JetBrains Mono';font-size:12px;color:var(--muted)">${played} de ${games.length} jogos com placar lançado · demais colocados (4º em diante):</div>`+tableHtml;
+  const CF_COLS=['#f4c430','#fff3cf','#c4162a','#e8913a','#ffffff','#d4a017'];
+  const confetti=q=>Array.from({length:q},()=>{
+    const size=4+Math.random()*7;
+    const round=Math.random()>.55;
+    const cf=[`left:${(Math.random()*100).toFixed(2)}%`,`--w:${size.toFixed(1)}px`,
+      `--hh:${(size*(round?1:.42)).toFixed(1)}px`,`--col:${CF_COLS[Math.floor(Math.random()*CF_COLS.length)]}`,
+      `--d:${(7+Math.random()*9).toFixed(2)}s`,`--dl:${(Math.random()*11).toFixed(2)}s`,
+      `--rot:${Math.floor(Math.random()*360)}deg`,`--spin:${Math.floor(360+Math.random()*1080)}deg`,
+      `--dx:${Math.floor(Math.random()*160-80)}px`,`--br:${round?'50%':'1px'}`].join(';');
+    return `<i class="cf" style="${cf}"></i>`;
+  }).join("");
+  content.innerHTML=`<div class="stage">
+    <div class="confetti back">${confetti(55)}</div>
+    <div class="stage-head">
+      <div class="stage-rule"></div>
+      <div class="stage-title">Classificação Final</div>
+      <div class="stage-sub">Bolão do Peno · Copa 2026</div>
+      <div class="stage-rule"></div>
+    </div>
+    <div id="tabsSlot" class="tabs-slot"></div>
+    <div class="stage-scroll"><div class="stage-bars">${stageBars}</div></div>
+    <div class="confetti front">${confetti(35)}</div>
+  </div>`;
 }
 
 function jogos(){
@@ -826,19 +1096,151 @@ function stats(){
   const maxDrought=droughts.length?droughts[0].best:1;
   const droughtBlock=droughts.length?`<div class="stat-block"><h3>🧊 Maior seca <span class="hint">jogos seguidos sem pontuar</span></h3>`+droughts.slice(0,6).map(r=>`<div class="hbar"><span class="lbl">${r.p.replace(/_/g," ")}</span><div class="track"><span class="track-cold" style="width:${Math.round(r.best/maxDrought*100)}%"></span></div><span class="val cold">${r.best}</span></div>`).join("")+`</div>`:"";
 
+  // ===== ESTATÍSTICAS POR FASE (Rei de cada fase) =====
+  const pbp=pointsByPhase();
+  const phaseKings=PHASES.map(ph=>{
+    const scored=players.map(p=>({p,...pbp[p][ph]})).filter(r=>r.total>0);
+    const anyPlayed=scored.some(r=>{
+      // fase teve pelo menos um jogo com resultado?
+      const phaseIds=games.filter(g=>phaseOf(g.jogo)===ph).map(g=>g.jogo);
+      return phaseIds.some(j=>hasResult(j));
+    });
+    if(!anyPlayed) return null;
+    scored.sort((a,b)=>b.pts-a.pts||b.exact-a.exact);
+    const top=scored[0];
+    return{ph,top,scored:scored.slice(0,3)};
+  }).filter(Boolean);
+  const kingsBlock=phaseKings.length?`<div class="stat-block"><h3>👑 Rei de cada fase <span class="hint">quem mais pontuou por fase</span></h3><div class="kings-grid">`+phaseKings.map(k=>`<div class="king-card"><div class="king-phase">${k.ph}</div><div class="king-who">${k.top.p.replace(/_/g," ")}</div><div class="king-big">${k.top.pts}<span>pts</span></div><div class="king-meta"><b>${k.top.exact}</b> exatos · <b>${k.top.hits}</b> acertos</div></div>`).join("")+`</div></div>`:"";
+
+  // ===== JOGO MAIS DECISIVO =====
+  // jogo onde a diferença entre 1º e 2º MAIS mudou
+  const cumSeries=cumulativePoints();
+  let decisiveGame=null,maxShift=-1;
+  const finiIds=games.filter(g=>hasResult(g.jogo)).map(g=>g.jogo).sort((a,b)=>a-b);
+  for(let i=0;i<finiIds.length;i++){
+    // pontos no fim de cada jogo
+    const rankAt=(k)=>{
+      const t={};
+      for(const p of players){t[p]=0;for(let ii=0;ii<=k;ii++){t[p]+=scoreForGame(p,finiIds[ii]).pts;}}
+      const sorted=Object.entries(t).sort((a,b)=>b[1]-a[1]);
+      return sorted;
+    };
+    if(i===0)continue;
+    const cur=rankAt(i),prev=rankAt(i-1);
+    // mudança total de posições no top 5
+    let shift=0;
+    for(let k=0;k<Math.min(5,cur.length);k++){
+      const p=cur[k][0];
+      const oldPos=prev.findIndex(x=>x[0]===p);
+      if(oldPos!==-1)shift+=Math.abs(oldPos-k);
+    }
+    if(shift>maxShift){maxShift=shift;decisiveGame=finiIds[i];}
+  }
+  let decisiveBlock="";
+  if(decisiveGame){
+    const g=games.find(x=>x.jogo===decisiveGame);const[s1,s2]=displayTeams(g);const o=off[decisiveGame];
+    decisiveBlock=`<div class="stat-block"><h3>💥 Jogo mais decisivo <span class="hint">quando o ranking mais mexeu</span></h3><div class="decisive"><div class="dec-g">J${decisiveGame} · ${s1} ${o.gol1}–${o.gol2} ${s2}</div><div class="dec-d">${maxShift} posições trocadas no top 5</div></div></div>`;
+  }
+
+  // ===== CONTRA A MARÉ =====
+  // pessoas que acertaram jogos onde o palpite delas foi minoria (< 25% dos palpiteiros)
+  const contraMare=players.map(p=>{
+    let against=0;const jogos=[];
+    for(const g of finished){
+      const o=off[g.jogo];const pk=parts[p]?.[g.jogo];if(!pk||pk.gol1==null||pk.gol2==null)continue;
+      const s=scoreForGame(p,g.jogo);if(s.pts===0)continue;
+      // olhou o resultado; conta quantos palpitaram o mesmo desfecho
+      const myOut=(pk.gol1>pk.gol2?'H':pk.gol2>pk.gol1?'A':'D');
+      let same=0,vot=0;for(const q of players){const qk=parts[q]?.[g.jogo];if(qk&&qk.gol1!=null&&qk.gol2!=null){vot++;const qo=(qk.gol1>qk.gol2?'H':qk.gol2>qk.gol1?'A':'D');if(qo===myOut)same++;}}
+      if(vot>=4 && same/vot<0.25){against++;jogos.push(g.jogo);}
+    }
+    return{p,against,jogos};
+  }).filter(r=>r.against>0).sort((a,b)=>b.against-a.against);
+  const cmBlock=contraMare.length?`<div class="stat-block"><h3>🌊 Contra a maré <span class="hint">acertou o que quase ninguém acertou</span></h3>`+contraMare.slice(0,6).map(r=>`<div class="hbar"><span class="lbl">${r.p.replace(/_/g," ")}</span><div class="track"><span style="width:${Math.round(r.against/contraMare[0].against*100)}%"></span></div><span class="val">${r.against}</span></div>`).join("")+`</div>`:"";
+
+  // ===== EVOLUÇÃO DO PÓDIO =====
+  // quem esteve no top 3 ao longo dos jogos
+  const podiumEvolution={};
+  for(const p of players)podiumEvolution[p]=0;
+  for(let i=0;i<finiIds.length;i++){
+    const t={};for(const p of players){t[p]=0;for(let ii=0;ii<=i;ii++)t[p]+=scoreForGame(p,finiIds[ii]).pts;}
+    const sorted=Object.entries(t).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    for(const[p]of sorted)podiumEvolution[p]++;
+  }
+  const podEvoArr=Object.entries(podiumEvolution).filter(([,c])=>c>0).sort((a,b)=>b[1]-a[1]);
+  const maxPodEvo=podEvoArr.length?podEvoArr[0][1]:1;
+  const podEvoBlock=podEvoArr.length?`<div class="stat-block"><h3>🎗️ Frequentadores do pódio <span class="hint">quantos jogos em que ficaram no top 3</span></h3>`+podEvoArr.slice(0,6).map(([p,c])=>`<div class="hbar"><span class="lbl">${p.replace(/_/g," ")}</span><div class="track"><span style="width:${Math.round(c/maxPodEvo*100)}%"></span></div><span class="val">${c}</span></div>`).join("")+`</div>`:"";
+
+  // ===== CURVA DE PONTOS =====
+  // gráfico SVG de linhas: pontos acumulados por participante ao longo dos jogos
+  let curveBlock="";
+  if(finiIds.length>1){
+    const W=800,H=280,padL=40,padB=30,padT=15,padR=15;
+    const maxP=Math.max(1,Math.max(...players.map(p=>cumSeries[p][cumSeries[p].length-1]?.total||0)));
+    const xStep=(W-padL-padR)/(finiIds.length-1);
+    const yFor=v=>H-padB-(v/maxP)*(H-padT-padB);
+    // cores por rank final
+    const finalOrder=players.map(p=>({p,pts:cumSeries[p][cumSeries[p].length-1]?.total||0})).sort((a,b)=>b.pts-a.pts);
+    const palette=['#F5C518','#4FD6C9','#FF6B5E','#7AB8F5','#B98BFF','#FFB86C','#8FE388','#FFA5A5','#88E2F2','#F5A3B7'];
+    const paths=finalOrder.slice(0,10).map((r,i)=>{
+      const pts=cumSeries[r.p];
+      const d=pts.map((pt,k)=>`${k===0?'M':'L'} ${padL+k*xStep} ${yFor(pt.total)}`).join(' ');
+      return `<path d="${d}" stroke="${palette[i%palette.length]}" stroke-width="2" fill="none" opacity="0.85"/><text x="${padL+(pts.length-1)*xStep+3}" y="${yFor(pts[pts.length-1].total)+3}" fill="${palette[i%palette.length]}" font-size="10" font-family="JetBrains Mono">${r.p.replace(/_/g," ")}</text>`;
+    }).join("");
+    // eixos
+    const axes=`<line x1="${padL}" y1="${padT}" x2="${padL}" y2="${H-padB}" stroke="#333" stroke-width="1"/><line x1="${padL}" y1="${H-padB}" x2="${W-padR}" y2="${H-padB}" stroke="#333" stroke-width="1"/><text x="${padL-6}" y="${padT+5}" fill="#888" font-size="10" font-family="JetBrains Mono" text-anchor="end">${maxP}</text><text x="${padL-6}" y="${H-padB}" fill="#888" font-size="10" font-family="JetBrains Mono" text-anchor="end">0</text><text x="${padL}" y="${H-padB+18}" fill="#888" font-size="10" font-family="JetBrains Mono">J${finiIds[0]}</text><text x="${W-padR}" y="${H-padB+18}" fill="#888" font-size="10" font-family="JetBrains Mono" text-anchor="end">J${finiIds[finiIds.length-1]}</text>`;
+    curveBlock=`<div class="stat-block"><h3>📈 Curva de pontos <span class="hint">top 10 ao longo dos jogos</span></h3><div style="overflow-x:auto"><svg viewBox="0 0 ${W} ${H}" style="width:100%;min-width:600px;height:auto">${axes}${paths}</svg></div></div>`;
+  }
+
+  // ===== TABELA CRUZADA: palpites × jogos =====
+  // linhas = jogos (finalizados), colunas = pessoas ordenadas por posição no ranking. Cada célula: palpite + cor.
+  const orderedFin=[...finished].sort((a,b)=>a.jogo-b.jogo);
+  const orderedPlayers=players.map(p=>({p,...totalFor(p)})).sort((a,b)=>b.t-a.t||b.exact-a.exact||a.p.localeCompare(b.p)).map(x=>x.p);
+  const headCols=orderedPlayers.map((p,idx)=>`<th class="xt-name" title="${p.replace(/_/g," ")} (${idx+1}º)"><span class="xt-rank">${idx+1}º</span> ${p.replace(/_/g," ").split(' ')[0]}</th>`).join("");
+  const bodyRows=orderedFin.map(g=>{
+    const o=off[g.jogo];const[s1,s2]=displayTeams(g);
+    const cells=orderedPlayers.map(p=>{
+      const pk=parts[p]?.[g.jogo];const s=scoreForGame(p,g.jogo);
+      const cls=s.state==='exact'?'xt-exact':s.pts>0?'xt-hit':(pk&&pk.gol1!=null?'xt-miss':'xt-empty');
+      const txt=(pk&&pk.gol1!=null&&pk.gol2!=null)?`${pk.gol1}–${pk.gol2}`:'—';
+      return `<td class="xt-cell ${cls}" title="${p.replace(/_/g," ")}: ${txt} (${s.pts} pts)">${txt}</td>`;
+    }).join("");
+    const resTxt=`${o.gol1}–${o.gol2}`;
+    return `<tr><td class="xt-jogo"><b>J${g.jogo}</b> ${s1||'?'} × ${s2||'?'}<span class="xt-real">${resTxt}</span></td>${cells}</tr>`;
+  }).join("");
+  const crossTable=orderedFin.length?`<div class="stat-block"><h3>🗂️ Tabela geral <span class="hint">colunas em ordem do ranking (1º → último) · palpites e acertos por jogo</span></h3><div class="xt-legend"><span class="xt-exact">■</span> placar exato · <span class="xt-hit">■</span> acertou vencedor · <span class="xt-miss">■</span> errou · <span class="xt-empty">■</span> não palpitou</div><div class="xt-wrap"><table class="xt"><thead><tr><th class="xt-jogo">Jogo</th>${headCols}</tr></thead><tbody>${bodyRows}</tbody></table></div></div>`:"";
+
   // cards ends with "...</div></div>" (last card + grid). Insert goalsCard before the final grid-close.
   const cardsWithGoals=cards.replace('__GOALS_CARD__',goalsCard);
-  content.innerHTML=
-    cardsWithGoals
-    +trickyBlock
-    +`<div class="section-label pos">🏅 Destaques positivos</div>`
-    +`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols">${exactBlock}${hrBlock}</div>`
-    +`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols2">${streakBlock}${udBlock}</div>`
-    +`<div class="section-label neg">🧊 Zona fria</div>`
-    +`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols3">${zerosBlock}${worstBlock}</div>`
-    +`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols4">${droughtBlock}<div></div></div>`
-    +consBlock;
-  content.querySelectorAll('.stat-cols,.stat-cols2,.stat-cols3,.stat-cols4').forEach(c=>{if(window.innerWidth<760)c.style.gridTemplateColumns='1fr';});
+
+  // Sub-abas: Visão geral · Destaques · Tabela
+  const subNav=`<div class="sub-tabs">
+    <button class="sub-tab ${statsSubView==='overview'?'active':''}" data-sub="overview">📌 Visão geral</button>
+    <button class="sub-tab ${statsSubView==='highlights'?'active':''}" data-sub="highlights">✨ Destaques</button>
+    <button class="sub-tab ${statsSubView==='table'?'active':''}" data-sub="table">🗂️ Tabela geral</button>
+  </div>`;
+
+  let bodyHtml="";
+  if(statsSubView==='overview'){
+    bodyHtml = cardsWithGoals + kingsBlock + trickyBlock + consBlock;
+  } else if(statsSubView==='highlights'){
+    bodyHtml = decisiveBlock
+      + `<div class="section-label pos">🏅 Destaques positivos</div>`
+      + `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols">${exactBlock}${hrBlock}</div>`
+      + `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols2">${streakBlock}${udBlock}</div>`
+      + `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-colsA">${cmBlock}${podEvoBlock}</div>`
+      + curveBlock
+      + `<div class="section-label neg">🧊 Zona fria</div>`
+      + `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols3">${zerosBlock}${worstBlock}</div>`
+      + `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px" class="stat-cols4">${droughtBlock}<div></div></div>`;
+  } else {
+    bodyHtml = crossTable;
+  }
+  content.innerHTML = subNav + bodyHtml;
+  content.querySelectorAll('.stat-cols,.stat-cols2,.stat-cols3,.stat-cols4,.stat-colsA').forEach(c=>{if(window.innerWidth<760)c.style.gridTemplateColumns='1fr';});
+  content.querySelectorAll('.sub-tab').forEach(b=>{
+    b.onclick=()=>{statsSubView=b.dataset.sub;stats();};
+  });
 }
 
 function bracket(){
@@ -1036,8 +1438,192 @@ function palpitar(){
   });
 }
 
+// ===== FASES E HELPERS PARA RETROSPECTIVA E ESTATÍSTICAS =====
+function phaseOf(j){
+  j=Number(j);
+  if(j>=73&&j<=88)return "16-avos";
+  if(j>=89&&j<=96)return "Oitavas";
+  if(j>=97&&j<=100)return "Quartas";
+  if(j>=101&&j<=102)return "Semis";
+  if(j===103)return "3º lugar";
+  if(j===104)return "Final";
+  return "Grupos";
+}
+const PHASES=["16-avos","Oitavas","Quartas","Semis","3º lugar","Final"];
+// pontuação unificada: KO usa scoreKO (respeita chave herdada), 16-avos usa scorePick
+function scoreForGame(p, j){
+  const o=off[j];
+  if(!o||o.gol1==null||o.gol2==null) return {pts:0,state:'pending'};
+  if(j>=89) return scoreKO(p,j);
+  return scorePick(parts[p]?.[j], o);
+}
+// pontos de cada participante em cada fase
+function pointsByPhase(){
+  const out={};
+  for(const p of players){
+    out[p]={};
+    for(const ph of PHASES) out[p][ph]={pts:0,exact:0,hits:0,made:0,total:0};
+    for(const g of games){
+      const ph=phaseOf(g.jogo);
+      if(!out[p][ph]) continue;
+      out[p][ph].total++;
+      const pk=parts[p]?.[g.jogo];
+      if(pk&&pk.gol1!=null&&pk.gol2!=null) out[p][ph].made++;
+      const s=scoreForGame(p,g.jogo);
+      out[p][ph].pts+=s.pts;
+      if(s.state==='exact') out[p][ph].exact++;
+      if(s.pts>0) out[p][ph].hits++;
+    }
+  }
+  return out;
+}
+// pontos acumulados jogo a jogo (na ordem cronológica dos jogos)
+function cumulativePoints(){
+  const ordered=[...games].sort((a,b)=>a.jogo-b.jogo);
+  const series={};
+  for(const p of players) series[p]=[];
+  let running={};
+  for(const p of players) running[p]=0;
+  for(const g of ordered){
+    const j=g.jogo;
+    if(!hasResult(j)) continue;
+    for(const p of players){
+      running[p]+=scoreForGame(p,j).pts;
+      series[p].push({jogo:j,total:running[p]});
+    }
+  }
+  return series;
+}
+
+// ===== RETROSPECTIVA POR PESSOA =====
+let retroWho=null;
+function retro(){
+  const played=playedCount();
+  if(played===0){content.innerHTML=`<div class="empty">A retrospectiva aparece conforme os jogos são lançados.</div>`;return;}
+  const rows=players.map(p=>({p,...totalFor(p)})).sort((a,b)=>b.t-a.t||b.exact-a.exact||a.p.localeCompare(b.p));
+  if(!retroWho) retroWho=rows[0].p;
+  const opts=rows.map(r=>`<option value="${r.p}" ${r.p===retroWho?'selected':''}>${r.p.replace(/_/g," ")} — ${r.t} pts</option>`).join("");
+  const p=retroWho;
+  const rank=rows.findIndex(r=>r.p===p)+1;
+  const stat=rows.find(r=>r.p===p);
+  const byPhase=pointsByPhase()[p];
+  // best game (most points), gols palpitados, série de acertos
+  let bestGame=null,bestPts=0;
+  let curStreak=0,bestStreak=0;
+  const finIds=games.filter(g=>hasResult(g.jogo)).map(g=>g.jogo).sort((a,b)=>a-b);
+  const perGame=finIds.map(j=>{
+    const g=games.find(x=>x.jogo===j);
+    const s=scoreForGame(p,j);
+    if(s.pts>bestPts){bestPts=s.pts;bestGame=g;}
+    if(s.pts>0){curStreak++;bestStreak=Math.max(bestStreak,curStreak);}else curStreak=0;
+    return {g,s,pk:parts[p]?.[j]||{}};
+  });
+  // rare exacts: placar que poucos acertaram
+  let rarest=null,rarestSame=99;
+  for(const {g,s} of perGame){
+    if(s.state==='exact'){
+      const o=off[g.jogo];let same=0;
+      for(const q of players){const qk=parts[q]?.[g.jogo];if(qk&&qk.gol1===o.gol1&&qk.gol2===o.gol2)same++;}
+      if(same<rarestSame){rarestSame=same;rarest={g,same};}
+    }
+  }
+  // Evolução da posição ao longo dos jogos
+  const cum=cumulativePoints();
+  const points=cum[p];
+  const evolution=points.map((pt,i)=>{
+    const ranking=players.map(q=>({q,pts:cum[q][i].total})).sort((a,b)=>b.pts-a.pts);
+    return {jogo:pt.jogo, pos:ranking.findIndex(x=>x.q===p)+1, pts:pt.total};
+  });
+  const posNow=rank, posBest=Math.min(...evolution.map(e=>e.pos));
+  // per-phase cards
+  const phaseCards=PHASES.filter(ph=>byPhase[ph].total>0).map(ph=>{
+    const d=byPhase[ph];
+    return `<div class="retro-phase">
+      <div class="rp-name">${ph}</div>
+      <div class="rp-pts">${d.pts}<span> pts</span></div>
+      <div class="rp-detail">${d.exact} exatos · ${d.hits} acertos · ${d.made}/${d.total} palpites</div>
+    </div>`;
+  }).join("");
+  // badges compactos
+  const badges=[
+    bestGame?`<span class="retro-badge"><span class="ico">🎯</span>Melhor jogo <b>J${bestGame.jogo}</b> · ${bestPts} pts</span>`:'',
+    bestStreak>0?`<span class="retro-badge"><span class="ico">🔥</span><b>${bestStreak}</b> jogos seguidos pontuando</span>`:'',
+    rarest?`<span class="retro-badge"><span class="ico">💎</span>Palpite improvável <b>J${rarest.g.jogo}</b> · ${rarest.same===1?'só voc\u00ea':'só '+rarest.same+' pessoas'}</span>`:'',
+    `<span class="retro-badge"><span class="ico">📈</span>Melhor posição <b>${posBest}º</b></span>`
+  ].filter(Boolean).join("");
+  // barra empilhada de fases (colorida por fase, largura proporcional aos pts)
+  const phasePalette={
+    "16-avos":"#4FD6C9",
+    "Oitavas":"#7AB8F5",
+    "Quartas":"#F5C518",
+    "Semis":"#FF8C42",
+    "3º lugar":"#B98BFF",
+    "Final":"#FF6B5E"
+  };
+  const totalPts=Math.max(1,PHASES.reduce((s,ph)=>s+(byPhase[ph]?.pts||0),0));
+  const phasesWithPts=PHASES.filter(ph=>byPhase[ph]?.pts>0);
+  const phaseBar=phasesWithPts.length?`<div class="retro-phase-bar">
+    <div class="rpb-track">${phasesWithPts.map(ph=>{const d=byPhase[ph];const w=(d.pts/totalPts)*100;return `<div class="rpb-seg" style="width:${w}%;background:${phasePalette[ph]}" title="${ph}: ${d.pts} pts">${w>=10?d.pts:''}</div>`;}).join("")}</div>
+    <div class="rpb-legend">${phasesWithPts.map(ph=>`<span><span class="sw" style="background:${phasePalette[ph]}"></span>${ph} · <b>${byPhase[ph].pts}</b> pts</span>`).join("")}</div>
+  </div>`:"";
+  // timeline agrupada por fase (colapsável)
+  const timelineByPhase = PHASES.map(ph=>{
+    const items=perGame.filter(({g})=>phaseOf(g.jogo)===ph);
+    if(!items.length) return "";
+    const cards=items.slice().reverse().map(({g,s,pk})=>{
+      const o=off[g.jogo]||{};const[s1,s2]=displayTeams(g);
+      const pkTxt=(pk.gol1!=null&&pk.gol2!=null)?`${pk.gol1}–${pk.gol2}`:'—';
+      const realTxt=`${o.gol1}–${o.gol2}${o.pen?' ('+(o.pen==='sel1'?s1:s2)+' pên)':''}`;
+      const cls=s.state==='exact'?'ok':s.pts>0?'partial':'miss';
+      const label=s.state==='exact'?'placar exato':s.pts>0?'acertou vencedor':'errou';
+      return `<div class="retro-tl ${cls}">
+        <div class="tl-j">J${g.jogo}</div>
+        <div class="tl-match">${s1||'?'} × ${s2||'?'}</div>
+        <div class="tl-scores"><span>real: <b>${realTxt}</b></span><span>seu: <b>${pkTxt}</b></span></div>
+        <div class="tl-verdict">${s.pts>0?'+'+s.pts+' pts':'0 pts'} · ${label}</div>
+      </div>`;
+    }).join("");
+    return `<details class="retro-phase-group" open><summary><span style="width:8px;height:8px;background:${phasePalette[ph]};border-radius:2px;display:inline-block;margin-right:8px"></span>${ph}<span style="color:var(--muted);font-weight:400;margin-left:8px">· ${items.length} ${items.length===1?'jogo':'jogos'} · ${byPhase[ph].pts} pts</span></summary><div class="retro-timeline">${cards}</div></details>`;
+  }).join("");
+  content.innerHTML=`
+    <div class="retro-head">
+      <div class="retro-whobox">
+        <label class="palp-label">Retrospectiva de:</label>
+        <div class="palp-whorow">
+          <span class="palp-bigname">${p.replace(/_/g," ")}</span>
+          <select class="sel" id="retroWho">${opts}</select>
+        </div>
+      </div>
+      <div class="retro-summary">
+        <div class="rs-item"><div class="rs-v">${stat.t}</div><div class="rs-k">pontos</div></div>
+        <div class="rs-item"><div class="rs-v">${rank}º</div><div class="rs-k">posição atual</div></div>
+        <div class="rs-item"><div class="rs-v">${stat.exact}</div><div class="rs-k">exatos</div></div>
+        <div class="rs-item"><div class="rs-v">${stat.hits}/${stat.made}</div><div class="rs-k">acertos</div></div>
+      </div>
+    </div>
+    <div class="retro-badges">${badges}</div>
+    <div class="retro-section-title">🎨 Pontos por fase</div>
+    ${phaseBar}
+    <div class="retro-section-title">📆 Jogo a jogo</div>
+    ${timelineByPhase}`;
+  document.getElementById("retroWho").onchange=e=>{retroWho=e.target.value;retro();};
+}
+
 function render(){document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("active",t.dataset.view===view));
-  if(view==="ranking")ranking();else if(view==="jogos")jogos();else if(view==="stats")stats();else if(view==="bracket")bracket();else palpitar();}
+  document.body.classList.toggle("landing", view==="ranking");
+  // move tabs para fora do #content ANTES de re-renderizar (para não serem apagadas)
+  const tabs=document.getElementById("tabs");
+  const wrap=document.querySelector(".wrap");
+  const header=document.getElementById("topHeader");
+  if(tabs && header) header.insertAdjacentElement("afterend", tabs);
+  // roda a view (isso pode substituir #content e criar tabsSlot)
+  if(view==="ranking")ranking();else if(view==="jogos")jogos();else if(view==="stats")stats();else if(view==="bracket")bracket();else if(view==="retro")retro();else palpitar();
+  // se estamos no Ranking, agora move as abas para dentro do palco
+  if(view==="ranking"){
+    const slot=document.getElementById("tabsSlot");
+    if(slot && tabs) slot.appendChild(tabs);
+  }
+}
 document.getElementById("tabs").addEventListener("click",e=>{const b=e.target.closest(".tab");if(!b)return;view=b.dataset.view;render();});
 document.getElementById("refreshBtn").onclick=fetchResults;
 window.addEventListener("resize",()=>{if(view==="stats")stats();});
